@@ -22,7 +22,6 @@
         "heading_zC6PGy",
         "text_rxUbVd"
       ],
-      "disabled": true,
       "settings": {
         "image_overlay_opacity": 0,
         "image_height": "medium",
@@ -34,6 +33,21 @@
         "mobile_content_alignment": "center",
         "stack_images_on_mobile": true,
         "show_text_below": true
+      }
+    },
+    "breadcrumbs_KwG6HH": {
+      "type": "breadcrumbs",
+      "settings": {
+        "breadcrumbs_enabled": true,
+        "breadcrumbs_menu_definition": "main-menu",
+        "prefer_shortest_path": false,
+        "separator_shape": "triangle",
+        "font_size": 14,
+        "color_scheme": "",
+        "enable_divider": false,
+        "divider_color": "#cccccc",
+        "padding_top": 12,
+        "padding_bottom": 12
       }
     },
     "subcollection_menu_83RpXP": {
@@ -128,6 +142,10 @@
     "1737399109a9cdb2b7": {
       "type": "apps",
       "blocks": {
+        "searchanise_search_filter_app_block_njwNNU": {
+          "type": "shopify:\/\/apps\/searchanise-search-filter\/blocks\/app-block\/d8f24ada-02b1-458a-bbeb-5bf16d5c921e",
+          "settings": {}
+        },
         "judge_me_reviews_featured_carousel_fDqjWM": {
           "type": "shopify:\/\/apps\/judge-me-reviews\/blocks\/featured_carousel\/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
           "settings": {
@@ -136,11 +154,11 @@
         }
       },
       "block_order": [
+        "searchanise_search_filter_app_block_njwNNU",
         "judge_me_reviews_featured_carousel_fDqjWM"
       ],
       "custom_css": [
-        ".jdgm-carousel__right-arrow,.jdgm-carousel__left-arrow {border-width: 3px;}",
-        ".jdgm-carousel-number-of-reviews a {pointer-events: none; text-decoration: none; color: inherit; cursor: default;}"
+        ".jdgm-carousel__right-arrow,.jdgm-carousel__left-arrow {border-width: 3px;}"
       ],
       "settings": {
         "include_margins": true
@@ -234,12 +252,13 @@
         "handle_size": 12,
         "padding_image": 0,
         "padding_top": 36,
-        "padding_bottom": 0
+        "padding_bottom": 72
       }
     }
   },
   "order": [
     "image_banner_YgigDA",
+    "breadcrumbs_KwG6HH",
     "subcollection_menu_83RpXP",
     "bestsellers_grid_HEG3HM",
     "banner",

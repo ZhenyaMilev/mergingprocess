@@ -102,13 +102,18 @@ button.button--primary:hover {
 }
 
 /* Mega-menu */
-.mega-menu__link.button-primary,  .mega-menu__link.button-secondarry {
+.mega-menu__link.button-primary,  .mega-menu__link.button-secondarry,
+.menu-drawer__menu-item.button-primary {
   background-color: #777E83;
   color: #ffffff;
   padding: 10px;
   width: max-content;
   transition: all 0.3s ease-in-out;
   font-weight: 400 !important;
+}
+
+.menu-drawer__menu-item.button-primary {
+  margin: 50px auto;
 }
 
 .links-wrapper {
@@ -159,4 +164,34 @@ li:has(> .mega-menu__link.button-primary) {
 
 .jdgm-carousel-wrapper .jdgm-carousel-title-and-link {
   gap: 14px;
+}
+
+/* global */
+html {
+  scroll-behavior: smooth;
+}
+
+/* product */
+.details-anchor-btn {
+  text-decoration: none;
+  color: inherit;
+
+  .icon-caret {
+    width: 12px;
+  }
+}
+
+/* header */
+.mega-menu_link-wrapper {
+  display: flex;
+  column-gap: 15px;
+}
+
+.mega-menu__collection-image {
+  img {
+    display: block;
+    width: 50px;
+    height: auto;
+    margin-top: 6px;
+  }
 }

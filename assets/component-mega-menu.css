@@ -13,7 +13,8 @@
   padding-top: 3rem;
   position: absolute;
   right: 0;
-  top: 100%;
+  top: calc(100% - 20px);
+  z-index: 10;
 }
 
 .shopify-section-header-sticky .mega-menu__content {
@@ -36,7 +37,7 @@
 
 .mega-menu__list {
   display: grid;
-  gap: 1.8rem 4rem;
+  gap: 1.8rem 2rem;
   grid-template-columns: repeat(6, minmax(0, 1fr));
   list-style: none;
 }

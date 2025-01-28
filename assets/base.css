@@ -2384,8 +2384,10 @@ input[type='checkbox'] {
   }
 
   .header--middle-left {
-    grid-template-areas: 'heading navigation icons';
-    grid-template-columns: auto auto 1fr;
+    grid-template-areas: 
+      'heading header-search icons'
+      'navigation navigation navigation';
+    grid-template-columns: 1fr auto 1fr;
     column-gap: 2rem;
   }
 
@@ -2596,6 +2598,12 @@ menu-drawer + .header__search {
   display: none;
 }
 
+.header__search {
+  @media screen and (min-width: 991px) {
+    display: none !important;
+  }
+}
+
 .header > .header__search {
   grid-area: left-icons;
   justify-self: start;
@@ -2683,6 +2691,12 @@ details[open] .modal-overlay::after {
   top: calc((var(--inputs-margin-offset) / 2));
 }
 
+.mobile-hidden {
+  @media screen and (max-width: 990px) {
+    display: none;
+  }
+}
+
 .search-modal__form {
   width: 100%;
 }
@@ -2711,6 +2725,11 @@ details[open] .modal-overlay::after {
     position: initial;
     margin-left: 0.5rem;
   }
+}
+
+.header > .search-modal__form {
+  grid-area: header-search;
+  justify-self: center;
 }
 
 /* Header menu drawer */
@@ -2771,7 +2790,10 @@ details[open] > .header__submenu {
 
 @media screen and (min-width: 990px) {
   .header__inline-menu {
-    display: block;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #353a3e;
   }
 
   .header--top-center .header__inline-menu {
@@ -2794,7 +2816,17 @@ details[open] > .header__submenu {
 .header__menu-item {
   padding: 1.2rem;
   text-decoration: none;
-  color: rgba(var(--color-foreground), 0.75);
+  color: #fff;
+  transition: all 0.2 ease-in-out;
+  border-right: 1px solid black;
+
+  &:first-child {
+    border-left: 1px solid black;
+  }
+
+  &:hover {
+    background-color: #fff;
+  }
 }
 
 .header__menu-item:hover {
@@ -2803,15 +2835,6 @@ details[open] > .header__submenu {
 
 .header__menu-item span {
   transition: text-decoration var(--duration-short) ease;
-}
-
-.header__menu-item:hover span {
-  text-decoration: underline;
-  text-underline-offset: 0.3rem;
-}
-
-details[open] > .header__menu-item {
-  text-decoration: underline;
 }
 
 details[open]:hover > .header__menu-item {
@@ -2824,7 +2847,6 @@ details[open] > .header__menu-item .icon-caret {
 
 .header__active-menu-item {
   transition: text-decoration-thickness var(--duration-short) ease;
-  color: rgb(var(--color-foreground));
   text-decoration: underline;
   text-underline-offset: 0.3rem;
 }
@@ -3595,7 +3617,6 @@ details-disclosure > details {
     transform: translateX(100%) scaleX(0);
   }
 }
-
 
 
 

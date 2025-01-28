@@ -35,34 +35,47 @@
                   role="list"
                 >
                   {%- for childlink in link.links -%}
-                    <li>
-                      <a
-                        id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}"
-                        href="{{ childlink.url }}"
-                        class="mega-menu__link mega-menu__link--level-2 link{% if childlink.current %} mega-menu__link--active{% endif %}{% if childlink.title contains '|' %} {{ childlink.title | split: '|' | last | downcase | replace: ' ', '-' }}{% endif %}"
-                        {% if childlink.current %}
-                          aria-current="page"
+                    <li class="mega-menu_link-wrapper">
+                      {% if childlink.type == 'collection_link' %}
+                        {% assign sub_collection = childlink.object %}
+                        {% if sub_collection and sub_collection.image %}
+                          <div class="mega-menu__collection-image">
+                            <img 
+                              src="{{ sub_collection.image | img_url: '300x' }}" 
+                              alt="{{ sub_collection.title | escape }}" 
+                            />
+                          </div>
                         {% endif %}
-                      >
-                        {{ childlink.title | split: '|' | first | escape }}
-                      </a>
-                      {%- if childlink.links != blank -%}
-                        <div class="links-wrapper">
-                          {%- for grandchildlink in childlink.links -%}
-<a
-  id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}-{{ grandchildlink.handle }}"
-  href="{{ grandchildlink.url }}"
-  class="mega-menu__link link{% if grandchildlink.current %} mega-menu__link--active{% endif %}{% if grandchildlink.title contains '|' %} {{ grandchildlink.title | split: '|' | last | downcase | replace: ' ', '-' }}{% endif %}"
-  {% if grandchildlink.current %}
-    aria-current="page"
-  {% endif %}
->
-  {{ grandchildlink.title | split: '|' | first | escape }}
-</a>
+                      {% endif %}
+                      <div class="mega-menu_link-content">
+                        <a
+                          id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}"
+                          href="{{ childlink.url }}"
+                          class="mega-menu__link mega-menu__link--level-2 link{% if childlink.current %} mega-menu__link--active{% endif %}{% if childlink.title contains '|' %} {{ childlink.title | split: '|' | last | downcase | replace: ' ', '-' }}{% endif %}"
+                          {% if childlink.current %}
+                            aria-current="page"
+                          {% endif %}
+                        >
+                          {{ childlink.title | split: '|' | first | escape }}
+                        </a>
+                        {%- if childlink.links != blank -%}
+                          <div class="links-wrapper">
+                            {%- for grandchildlink in childlink.links -%}
+                              <a
+                                id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}-{{ grandchildlink.handle }}"
+                                href="{{ grandchildlink.url }}"
+                                class="mega-menu__link link{% if grandchildlink.current %} mega-menu__link--active{% endif %}{% if grandchildlink.title contains '|' %} {{ grandchildlink.title | split: '|' | last | downcase | replace: ' ', '-' }}{% endif %}"
+                                {% if grandchildlink.current %}
+                                  aria-current="page"
+                                {% endif %}
+                              >
+                                {{ grandchildlink.title | split: '|' | first | escape }}
+                              </a>
 
-                          {%- endfor -%}
-                        </div>
-                      {%- endif -%}
+                            {%- endfor -%}
+                          </div>
+                        {%- endif -%}
+                      </div>
                     </li>
                   {%- endfor -%}
                 </ul>

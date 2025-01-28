@@ -324,21 +324,74 @@
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     var toggles = document.querySelectorAll('.menu-block__toggle');
-    toggles.forEach(function(toggle) {
-      toggle.addEventListener('click', function() {
-        var dropdown = this.parentElement.querySelector('.menu-block__dropdown');
-        if (dropdown) {
-          dropdown.style.display = (dropdown.style.display === 'none' || dropdown.style.display === '')
-                                   ? 'block'
-                                   : 'none';
+
+    // Rotate the arrow
+    var arrowRotate = function(element) {
+      element.classList.toggle('active');
+      var arrow = element.querySelector('.arrow');
+      console.log(element);
+      if (arrow) {
+        arrow.style.transform = element.classList.contains('active')
+          ? 'rotate(180deg)'
+          : 'rotate(0deg)';
+      }
+    }
+    var modalToggler = function(element) {
+      var dropdown = element.parentElement.querySelector('.menu-block__dropdown');
+      if (dropdown) {
+        dropdown.style.display = (dropdown.style.display === 'none' || dropdown.style.display === '')
+          ? 'block'
+          : 'none';
+      }
+    }
+
+    // Function to close the dropdown
+    var closeDropdown = function(element) {
+      var dropdown = element.parentElement.querySelector('.menu-block__dropdown');
+      var toggle = element.parentElement.querySelector('.menu-block__toggle');
+      if (dropdown && (dropdown.style.display === 'block')) {
+        dropdown.style.display = 'none';
+        arrowRotate(toggle);
+      }
+    }
+
+    function handleClickOutside(targetElement, callback) {
+      if (!targetElement) return;
+
+      function onClick(event) {
+        if (!targetElement.contains(event.target)) {
+          callback();
+          removeListener();
         }
-        // Rotate the arrow
-        this.classList.toggle('active');
-        var arrow = this.querySelector('.arrow');
-        if (arrow) {
-          arrow.style.transform = this.classList.contains('active')
-            ? 'rotate(180deg)'
-            : 'rotate(0deg)';
+      }
+
+      // Attach the event listener
+      document.addEventListener('click', onClick);
+
+      // Return a function to remove the listener
+      function removeListener() {
+        document.removeEventListener('click', onClick);
+      }
+
+      return removeListener;
+    }
+
+    toggles.forEach(function(toggle) {
+      toggle.addEventListener('click', function(event) {
+        event.stopPropagation();
+
+        modalToggler(this);
+        arrowRotate(this);
+
+        // Set up the outside click handler only if the dropdown is now open
+        var dropdown = toggle.parentElement.querySelector('.menu-block__dropdown');
+        if (dropdown && dropdown.style.display === 'block') {
+          // Define the callback to close the dropdown
+          var removeOutsideClickListener = handleClickOutside(this.parentElement, function() {
+            closeDropdown(dropdown);
+            // Remove the listener after it's triggered
+            removeOutsideClickListener();
+          });
         }
       });
     });

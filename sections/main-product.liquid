@@ -31,55 +31,6 @@
       padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
     }
 
-    
-    .product__stock-info {
-      font-size: 14px; 
-      margin-top: 5px; 
-      position: relative; 
-    }
-
-    
-    .stock-text {
-      text-decoration: underline dotted;
-      cursor: pointer; 
-    }
-
-   
-    .stock-text.in-stock {
-      color: #6c757d; 
-    }
-
-    
-    .stock-text.low-stock,
-    .stock-text.no-stock {
-      color: #d9534f; 
-    }
-
-    
-    .tooltip-text {
-      visibility: hidden;
-      opacity: 0;
-      position: absolute;
-      background-color: #000;
-      color: #fff; 
-      font-size: 12px;
-      padding: 5px 10px;
-      border-radius: 0; 
-      white-space: normal; 
-      z-index: 10;
-      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-      transform: translateY(5px); 
-      transition: visibility 0.3s, opacity 0.3s ease, transform 0.3s ease;
-      max-width: 250px; 
-    }
-
-    
-    .stock-text:hover + .tooltip-text {
-      visibility: visible;
-      opacity: 1;
-      transform: translateY(0);
-    }
-
     @media screen and (min-width: 750px) {
       .section-{{ section.id }}-padding {
         padding-top: {{ section.settings.padding_top }}px;
@@ -173,57 +124,19 @@
                   </div>
                 {%- endif -%}
                 {%- if cart.taxes_included or cart.duties_included or shop.shipping_policy.body != blank -%}
-  <div class="product__tax caption rte">
-    {%- if cart.duties_included and cart.taxes_included -%}
-      {{ 'products.product.duties_and_taxes_included' | t }}
-    {%- elsif cart.taxes_included -%}
-      {{ 'products.product.taxes_included' | t }}
-    {%- elsif cart.duties_included -%}
-      {{ 'products.product.duties_included' | t }}
-    {%- endif -%}
-    {%- if shop.shipping_policy.body != blank -%}
-      {{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}
-    {%- endif -%}
-  </div>
-{%- endif -%}
-
-<!-- Новий блок для відображення запасів -->
-<div class="product__stock-info">
-  {% assign inv = product.selected_or_first_available_variant.inventory_quantity %}
-{% if product.selected_or_first_available_variant.inventory_management == 'shopify' %}
-  {% if inv == 0 %}
-    <span class="stock-text no-stock">
-      {{ section.settings.stock_text | default: 'Upon request' }}
-    </span>
-    <div class="tooltip-text">
-      {{ section.settings.tooltip_out_of_stock | default: 'We need to check the product availability with our supplier. Please contact us for details.' }}
-    </div>
-  {% elsif inv <= 3 %}
-    <span class="stock-text low-stock">
-      In stock ({{ inv }} pcs)
-    </span>
-    <div class="tooltip-text">
-      {{ section.settings.tooltip_in_stock | default: 'Limited stock available. Order soon!' }}
-    </div>
-  {% elsif inv > 20 %}
-    <span class="stock-text in-stock">
-      In stock (>20 pcs)
-    </span>
-    <div class="tooltip-text">
-      {{ section.settings.tooltip_in_stock | default: 'We have the goods in stock. We usually send the shipment to you within 24 hours of payment. Delivery time usually within two working days.' }}
-    </div>
-  {% else %}
-    <span class="stock-text in-stock">
-      In stock ({{ inv }} pcs)
-    </span>
-    <div class="tooltip-text">
-      {{ section.settings.tooltip_in_stock | default: 'We have the goods in stock. We usually send the shipment to you within 24 hours of payment. Delivery time usually within two working days.' }}
-    </div>
-  {% endif %}
-{% endif %}
-</div>
-
-                
+                  <div class="product__tax caption rte">
+                    {%- if cart.duties_included and cart.taxes_included -%}
+                      {{ 'products.product.duties_and_taxes_included' | t }}
+                    {%- elsif cart.taxes_included -%}
+                      {{ 'products.product.taxes_included' | t }}
+                    {%- elsif cart.duties_included -%}
+                      {{ 'products.product.duties_included' | t }}
+                    {%- endif -%}
+                    {%- if shop.shipping_policy.body != blank -%}
+                      {{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
                 <div {{ block.shopify_attributes }}>
                   {%- assign product_form_installment_id = 'product-form-installment-' | append: section.id -%}
                   {%- form 'product', product, id: product_form_installment_id, class: 'installment caption-large' -%}
@@ -319,6 +232,10 @@
                   </details>
                 </div>
               {%- when 'quantity_selector' -%}
+                <a class="details-anchor-btn" href="#description-section">
+                  Detailní informace
+                  {{ 'icon-caret.svg' | inline_asset_content }}
+                </a>
                 <div
                   id="Quantity-Form-{{ section.id }}"
                   class="product-form__input product-form__quantity{% if settings.inputs_shadow_vertical_offset != 0 and settings.inputs_shadow_vertical_offset < 0 %} product-form__quantity-top{% endif %}"
@@ -383,6 +300,110 @@
                         assign current_qty_for_volume_pricing = cart_qty | plus: product.selected_or_first_available_variant.quantity_rule.increment
                       endif
                     -%}
+                    {%- if product.quantity_price_breaks_configured? -%}
+                      <price-per-item
+                        id="Price-Per-Item-{{ section.id }}"
+                        data-section-id="{{ section.id }}"
+                        data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+                      >
+                        {%- if product.selected_or_first_available_variant.quantity_price_breaks.size > 0 -%}
+                          {%- assign variant_price_compare = product.selected_or_first_available_variant.compare_at_price -%}
+                          <div class="price-per-item">
+                            {%- if variant_price_compare -%}
+                              <dl class="price-per-item--current">
+                                <dt class="visually-hidden">
+                                  {{ 'products.product.price.regular_price' | t }}
+                                </dt>
+                                <dd>
+                                  <s class="variant-item__old-price">
+                                    {{ variant_price_compare | money_with_currency }}
+                                  </s>
+                                </dd>
+                              </dl>
+                            {%- endif -%}
+                            {%- if current_qty_for_volume_pricing < volume_pricing_array.last.minimum_quantity -%}
+                              {%- assign variant_price = product.selected_or_first_available_variant.price
+                                | money_with_currency
+                              -%}
+                              <span class="price-per-item--current">
+                                {{- 'products.product.volume_pricing.price_at_each' | t: price: variant_price -}}
+                              </span>
+                            {%- else -%}
+                              {%- for price_break in volume_pricing_array -%}
+                                {%- if current_qty_for_volume_pricing >= price_break.minimum_quantity -%}
+                                  {%- assign price_break_price = price_break.price | money_with_currency -%}
+                                  <span class="price-per-item--current">
+                                    {{-
+                                      'products.product.volume_pricing.price_at_each'
+                                      | t: price: price_break_price
+                                    -}}
+                                  </span>
+                                  {%- break -%}
+                                {%- endif -%}
+                              {%- endfor -%}
+                            {%- endif -%}
+                          </div>
+                        {%- else -%}
+                          {%- assign variant_price = product.selected_or_first_available_variant.price
+                            | money_with_currency
+                          -%}
+                          {%- assign variant_price_compare = product.selected_or_first_available_variant.compare_at_price -%}
+                          <div class="price-per-item">
+                            {%- if variant_price_compare -%}
+                              <dl class="price-per-item--current">
+                                <dt class="visually-hidden">
+                                  {{ 'products.product.price.regular_price' | t }}
+                                </dt>
+                                <dd>
+                                  <s class="variant-item__old-price">
+                                    {{ variant_price_compare | money_with_currency }}
+                                  </s>
+                                </dd>
+                                <dt class="visually-hidden">
+                                  {{ 'products.product.price.sale_price' | t }}
+                                </dt>
+                                <dd>
+                                  <span class="price-per-item--current">
+                                    {{- 'products.product.volume_pricing.price_at_each' | t: price: variant_price -}}
+                                  </span>
+                                </dd>
+                              </dl>
+                            {%- else -%}
+                              <span class="price-per-item--current">
+                                {{- 'products.product.volume_pricing.price_at_each' | t: price: variant_price -}}
+                              </span>
+                            {%- endif -%}
+                          </div>
+                        {%- endif -%}
+                      </price-per-item>
+                    {%- endif -%}
+                  </div>
+                  <div class="quantity__rules caption" id="Quantity-Rules-{{ section.id }}">
+                    {%- if product.selected_or_first_available_variant.quantity_rule.increment > 1 -%}
+                      <span class="divider">
+                        {{-
+                          'products.product.quantity.multiples_of'
+                          | t: quantity: product.selected_or_first_available_variant.quantity_rule.increment
+                        -}}
+                      </span>
+                    {%- endif -%}
+                    {%- if product.selected_or_first_available_variant.quantity_rule.min > 1 -%}
+                      <span class="divider">
+                        {{-
+                          'products.product.quantity.minimum_of'
+                          | t: quantity: product.selected_or_first_available_variant.quantity_rule.min
+                        -}}
+                      </span>
+                    {%- endif -%}
+                    {%- if product.selected_or_first_available_variant.quantity_rule.max != null -%}
+                      <span class="divider">
+                        {{-
+                          'products.product.quantity.maximum_of'
+                          | t: quantity: product.selected_or_first_available_variant.quantity_rule.max
+                        -}}
+                      </span>
+                    {%- endif -%}
+                  </div>
                   {%- if product.quantity_price_breaks_configured? -%}
                     <volume-pricing class="parent-display" id="Volume-{{ section.id }}">
                       {%- if product.selected_or_first_available_variant.quantity_price_breaks.size > 0 -%}
@@ -712,7 +733,6 @@
 </product-info>
 
 {% schema %}
-  
 {
   "name": "t:sections.main-product.name",
   "tag": "section",
@@ -2250,9 +2270,6 @@
       "label": "t:sections.all.padding.padding_bottom",
       "default": 36
     }
-    
   ]
 }
 {% endschema %}
-
-          
