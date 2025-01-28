@@ -18,4 +18,7 @@ window.sq = window.sq || {};
 window.sq.initSearch = (store) => {
   store.search();
 };
+document.addEventListener("DOMContentLoaded", function() {
+    
+
 

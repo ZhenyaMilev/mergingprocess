@@ -1,5 +1,14 @@
 .mega-menu__link.mega-menu__link--level-2.link.button-primary {
     background-color: #FD7444; 
     color: #ffffff; 
-    border-color: #FD7444; 
+    border: 1px solid #FD7444; 
+    padding: 10px 15px; 
+    text-decoration: none; 
+    display: inline-block; 
+    transition: background-color 0.3s, border-color 0.3s; 
 }
+
+.mega-menu__link.mega-menu__link--level-2.link.button-primary:hover {
+    background-color: #383c3c; 
+    color: #ffffff; 
+    border-color: #383c3c; 

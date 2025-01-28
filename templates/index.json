@@ -105,7 +105,8 @@
         "judge_me_reviews_featured_carousel_NHf7HM"
       ],
       "custom_css": [
-        ".jdgm-carousel__right-arrow,.jdgm-carousel__left-arrow {border-width: 3px;}"
+        ".jdgm-carousel__right-arrow,.jdgm-carousel__left-arrow {border-width: 3px;}",
+        ".jdgm-carousel-number-of-reviews a {pointer-events: none; text-decoration: none; color: inherit; cursor: default;}"
       ],
       "settings": {
         "include_margins": true

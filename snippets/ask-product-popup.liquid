@@ -17,8 +17,9 @@
         </div>
 
         <div class="form-group">
-          <label for="AskSalesmanPhone" style="color: var(--ask-salesman-label-color);">Phone *</label>
-          <input type="text" id="AskSalesmanPhone" name="contact[phone]" placeholder="Enter your phone number" required>
+          <label for="AskSalesmanPhone" style="color: var(--ask-salesman-label-color);">Phone</label>
+          <input type="text" id="AskSalesmanPhone" name="contact[phone]" placeholder="Enter your phone number">
+
         </div>
 
         <div class="form-group">
@@ -63,10 +64,9 @@
     var form = document.getElementById('AskSalesmanForm');
     var submitButton = document.getElementById('ask-salesman-submit');
     var requiredFields = [
-      document.getElementById('AskSalesmanEmail'),
-      document.getElementById('AskSalesmanPhone'),
-      document.getElementById('AskSalesmanMessage')
-    ];
+  document.getElementById('AskSalesmanEmail'),
+  document.getElementById('AskSalesmanMessage')
+];
 
     function validateForm() {
       var allFilled = requiredFields.every(function(field) {
