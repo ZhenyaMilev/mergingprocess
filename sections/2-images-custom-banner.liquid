@@ -1,0 +1,200 @@
+<section id="{{ section.id }}" class="double-banners">
+  <style>
+    .double-banners {
+      --padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
+      --padding-top-desktop: {{ section.settings.padding_top_desktop }}px;
+      --padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
+      --padding-bottom-desktop: {{ section.settings.padding_bottom_desktop }}px;
+      --background-color: {{ section.settings.background_color }};
+      --image-spacing: {{ section.settings.image_spacing }}px;
+      --container-width: {{ section.settings.container_max_width }}px;
+      --max-width-image-1-desktop: {{ section.settings.max_width_image_1_desktop }}px;
+      --max-width-image-2-desktop: {{ section.settings.max_width_image_2_desktop }}px;
+      background-color: var(--background-color);
+      padding-top: var(--padding-top-mobile);
+      padding-bottom: var(--padding-bottom-mobile);
+    }
+    @media (min-width: 768px) {
+      .double-banners {
+        padding-top: var(--padding-top-desktop);
+        padding-bottom: var(--padding-bottom-desktop);
+      }
+    }
+    .double-banners__container {
+      max-width: var(--container-width);
+      margin: 0 auto;
+    }
+    .double-banners__title {
+      text-align: center;
+    }
+    .double-banners__description {
+      text-align: center;
+    }
+    .double-banners__images {
+      display: flex;
+      gap: var(--image-spacing);
+    }
+    @media (max-width: 767px) {
+      .double-banners__images {
+        flex-direction: column;
+          max-width:335px;
+          margin: 0 auto;
+      }
+    }
+    .double-banners__image-wrapper {
+      overflow: hidden;
+    }
+    .double-banners__image-wrapper--1 img,
+    .double-banners__image-wrapper--2 img {
+      width: 100%;
+      height: auto;
+      transition: transform 0.3s ease-in-out;
+      display: block;
+      max-height: 404px;
+    }
+    .double-banners__image-wrapper:hover img {
+      transform: scale(1.05);
+    }
+  </style>
+  <div class="double-banners__container">
+    {% if section.settings.title != blank %}
+      <h2 class="double-banners__title">{{ section.settings.title | escape }}</h2>
+    {% endif %}
+    {% if section.settings.description != blank %}
+      <p class="double-banners__description">{{ section.settings.description }}</p>
+    {% endif %}
+    <div class="double-banners__images">
+      {% if section.settings.image_1 != blank %}
+        <div class="double-banners__image-wrapper double-banners__image-wrapper--1">
+          {% if section.settings.link_1 != blank %}
+            <a href="{{ section.settings.link_1 }}">
+          {% endif %}
+          <img
+            src="{{ section.settings.image_1 | img_url: 'master' }}"
+            alt="{{ section.settings.image_1.alt | escape }}"
+            loading="lazy"
+          >
+          {% if section.settings.link_1 != blank %}
+            </a>
+          {% endif %}
+        </div>
+      {% endif %}
+      {% if section.settings.image_2 != blank %}
+        <div class="double-banners__image-wrapper double-banners__image-wrapper--2">
+          {% if section.settings.link_2 != blank %}
+            <a href="{{ section.settings.link_2 }}">
+          {% endif %}
+          <img
+            src="{{ section.settings.image_2 | img_url: 'master' }}"
+            alt="{{ section.settings.image_2.alt | escape }}"
+            loading="lazy"
+          >
+          {% if section.settings.link_2 != blank %}
+            </a>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Double Banners",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Section description"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding top desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding bottom desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 50
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "First image"
+    },
+    {
+      "type": "url",
+      "id": "link_1",
+      "label": "Link for first image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Second image"
+    },
+    {
+      "type": "url",
+      "id": "link_2",
+      "label": "Link for second image"
+    },
+    {
+      "type": "range",
+      "id": "image_spacing",
+      "label": "Spacing between images",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "container_max_width",
+      "label": "Container max width",
+      "min": 300,
+      "max": 2000,
+      "step": 100,
+      "default": 1400
+    }
+  ],
+  "presets": [
+    {
+      "name": "Double Banners"
+    }
+  ]
+}
+{% endschema %}

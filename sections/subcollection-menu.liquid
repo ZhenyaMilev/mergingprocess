@@ -1,0 +1,303 @@
+{% if collection.metafields.custom.subcollection_list != blank %}
+  <section id="section-{{ section.id }}" class="subcollection-grid {{ section.settings.custom_class }}" style="background-color: var(--subcollection-bg);">
+    {% if section.settings.title != blank %}
+      <h2 class="subcollection-grid__title" style="color: var(--subcollection-title-color); font-size: var(--subcollection-title-size-desktop);">
+        {{ section.settings.title }}
+      </h2>
+    {% endif %}
+
+    <div class="subcollection-grid__items">
+      {% if collection.metafields.custom.subcollection_list != blank %}
+        {% assign subcollections = collection.metafields.custom.subcollection_list.value %}
+        {% for subcollection in subcollections %}
+          <div class="subcollection-grid__item">
+            <a href="/collections/{{ subcollection.handle }}" class="subcollection-grid__link" style="color: var(--subcollection-link-color);">
+              <span class="subcollection-grid__link-text">{{ subcollection.title }}</span>
+              {% if subcollection.image != blank %}
+                <img class="subcollection-grid__image" loading="lazy"
+                  src="{{ subcollection.image.src | img_url: '100x100' }}" 
+                  alt="{{ subcollection.image.alt | default: subcollection.title }}" 
+                  loading="lazy"
+                >
+              {% endif %}
+            </a>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </section>
+{% endif %}
+
+
+<style>
+#section-{{ section.id }} {
+  --subcollection-bg: {{ section.settings.background }};
+  --subcollection-title-color: {{ section.settings.title_color }};
+  --subcollection-link-color: {{ section.settings.link_color }};
+  --subcollection-link-hover-color: {{ section.settings.link_hover_color }};
+  --subcollection-title-size-desktop: {{ section.settings.title_size_desktop }}px;
+  --subcollection-title-size-mobile: {{ section.settings.title_size_mobile }}px;
+  --subcollection-pt-desktop: {{ section.settings.padding_top_desktop }}px;
+  --subcollection-pt-mobile: {{ section.settings.padding_top_mobile }}px;
+  --subcollection-pb-desktop: {{ section.settings.padding_bottom_desktop }}px;
+  --subcollection-pb-mobile: {{ section.settings.padding_bottom_mobile }}px;
+  --subcollection-vertical-desktop: {{ section.settings.vertical_gap_desktop }}px;
+  --subcollection-vertical-mobile: {{ section.settings.vertical_gap_mobile }}px;
+  --subcollection-horizontal-desktop: {{ section.settings.horizontal_gap_desktop }}px;
+  --subcollection-horizontal-mobile: {{ section.settings.horizontal_gap_mobile }}px;
+}
+
+#section-{{ section.id }} {
+  padding-top: var(--subcollection-pt-desktop);
+  padding-bottom: var(--subcollection-pb-desktop);
+}
+
+@media (max-width: 767px) {
+  #section-{{ section.id }} {
+    padding-top: var(--subcollection-pt-mobile);
+    padding-bottom: var(--subcollection-pb-mobile);
+  }
+}
+
+#section-{{ section.id }} .subcollection-grid__title {
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 767px) {
+  #section-{{ section.id }} .subcollection-grid__title {
+    font-size: var(--subcollection-title-size-mobile);
+  }
+}
+
+#section-{{ section.id }} .subcollection-grid__items {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); 
+  gap: var(--subcollection-horizontal-desktop) var(--subcollection-vertical-desktop); 
+}
+
+@media (max-width: 767px) {
+  #section-{{ section.id }} .subcollection-grid__items {
+    grid-template-columns: repeat(2, 1fr); 
+    gap: var(--subcollection-horizontal-mobile) var(--subcollection-vertical-mobile);
+  }
+}
+
+#section-{{ section.id }} .subcollection-grid__link {
+  text-decoration: none;
+  transition: color 0.3s;
+  color: var(--subcollection-link-color);
+  display: flex;
+  flex-direction: row; 
+  align-items: center;
+  justify-content: flex-start; 
+  padding: 8px; 
+  border: 1px solid #ccc; 
+  gap: 6px; 
+  box-sizing: border-box;
+  text-align: left; 
+  font-size: 14px; 
+  line-height: 1.4; 
+  height: 80px; 
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+}
+
+#section-{{ section.id }} .subcollection-grid__link::after {
+  content: '';
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M285.48 272.97l-194.35 194.34c-12.12 12.12-31.79 12.12-43.91 0l-22.63-22.63c-12.12-12.12-12.12-31.79 0-43.91l154.03-154.03L24.59 92.97c-12.12-12.12-12.12-31.79 0-43.91L47.22 26.43c12.12-12.12 31.79-12.12 43.91 0l194.35 194.34c12.49 12.49 12.49 32.77 0 45.24z"/></svg>') no-repeat center;
+  mask-size: contain;
+  -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M285.48 272.97l-194.35 194.34c-12.12 12.12-31.79 12.12-43.91 0l-22.63-22.63c-12.12-12.12-12.12-31.79 0-43.91l154.03-154.03L24.59 92.97c-12.12-12.12-12.12-31.79 0-43.91L47.22 26.43c12.12-12.12 31.79-12.12 43.91 0l194.35 194.34c12.49 12.49 12.49 32.77 0 45.24z"/></svg>') no-repeat center;
+  -webkit-mask-size: contain;
+  background-color: currentColor;
+  margin-left: auto;
+  height: 14px; /* Настройте размер */
+  width: 14px;
+  color: #666666;
+}
+
+@media (max-width: 767px) {
+  #section-{{ section.id }} .subcollection-grid__link {
+    font-size: 12px; 
+    padding: 6px; 
+    height: 70px; 
+  }
+  #section-{{ section.id }} .subcollection-grid__link::after {
+    font-size: 14px; 
+  }
+}
+
+#section-{{ section.id }} .subcollection-grid__link:hover {
+  color: var(--subcollection-link-hover-color);
+  background-color: rgba(0, 0, 0, 0.05); 
+}
+
+#section-{{ section.id }} .subcollection-grid__image {
+  order: -1; 
+  width: 36px; 
+  height: 36px; 
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+@media (max-width: 767px) {
+  #section-{{ section.id }} .subcollection-grid__image {
+    width: 32px; 
+    height: 32px;
+  }
+}
+
+#section-{{ section.id }} .subcollection-grid__text {
+  font-size: 14px; 
+  line-height: 1.4; 
+  color: #666666; 
+  font-weight: bold; 
+  font-family: 'Roboto', sans-serif;
+}
+
+@media (max-width: 767px) {
+  #section-{{ section.id }} .subcollection-grid__text {
+    font-size: 12px; 
+    font-weight: bold; 
+    color: #666666; 
+    font-family: 'Roboto', sans-serif;
+  }
+}
+</style>
+
+
+
+{% schema %}
+{
+  "name": "Subcollection Menu",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background color"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link color"
+    },
+    {
+      "type": "color",
+      "id": "link_hover_color",
+      "label": "Link hover color"
+    },
+    {
+      "type": "range",
+      "id": "title_size_desktop",
+      "label": "Title size desktop",
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "title_size_mobile",
+      "label": "Title size mobile",
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding top desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding bottom desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "vertical_gap_desktop",
+      "label": "Vertical gap desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "vertical_gap_mobile",
+      "label": "Vertical gap mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "horizontal_gap_desktop",
+      "label": "Horizontal gap desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "horizontal_gap_mobile",
+      "label": "Horizontal gap mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "text",
+      "id": "custom_class",
+      "label": "Custom class"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Subcollection Menu"
+    }
+  ]
+}
+{% endschema %}

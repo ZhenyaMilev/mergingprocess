@@ -1,0 +1,584 @@
+{% assign show_section = false %}
+{% for product in section.settings.products %}
+  {% if product %}
+    {% assign show_section = true %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+
+{% if show_section %}
+  <section id="{{ section.id }}" class="bestsellers-section {{ section.settings.custom_classes | escape }}" style="background-color: {{ section.settings.section_bg_color }};">
+    {% if section.settings.title != blank %}
+      <h2 class="bestsellers-section__title">{{ section.settings.title }}</h2>
+    {% endif %}
+    {% if section.settings.description != blank %}
+      <div class="bestsellers-section__description">{{ section.settings.description }}</div>
+    {% endif %}
+    
+    <div class="bestsellers-section__products-wrapper" data-mobile-limit="2" data-desktop-limit="3">
+      {% for product in section.settings.products %}
+        {% if product %}
+          <div class="bestsellers-section__product-block">
+            <a href="{{ product.url }}" class="bestsellers-section__product-link">
+              <div class="product-tile">
+                <div class="product-tile__img">
+                  {%- comment -%}
+                    Request a high resolution image (500x500) then display it as 90x90.
+                  {%- endcomment -%}
+                  <img 
+                    src="{{ product.featured_image | img_url: '500x500' }}" 
+                    loading="lazy" 
+                    alt="{{ product.title | escape }}"
+                  >
+                </div>
+                <div class="product-tile__info">
+                  <!-- Product Name -->
+                  <div class="product-tile__name">{{ product.title }}</div>
+                  <!-- Stock Information with Tooltip -->
+                  <div class="product-tile__stock">
+                    {% assign inv = product.variants.first.inventory_quantity %}
+                    {% if inv == 0 %}
+                      <span class="stock-text tooltip-enabled dotted-underline" style="color: {{ section.settings.upon_request_color }};">
+                        Upon request
+                      </span>
+                      <div class="product-tile__tooltip">
+                        {{ section.settings.tooltip_out_of_stock }}
+                      </div>
+                    {% elsif inv < 20 %}
+                      <span class="stock-text tooltip-enabled dotted-underline">
+                        In stock ({{ inv }} pcs)
+                      </span>
+                      <div class="product-tile__tooltip">
+                        {{ section.settings.tooltip_in_stock }}
+                      </div>
+                    {% else %}
+                      <span class="stock-text tooltip-enabled dotted-underline">
+                        In stock (&gt;20 pcs)
+                      </span>
+                      <div class="product-tile__tooltip">
+                        {{ section.settings.tooltip_in_stock }}
+                      </div>
+                    {% endif %}
+                  </div>
+                  <!-- Price (bold, with extra top margin) -->
+                  <div class="product-tile__price">{{ product.price | money }}</div>
+                </div>
+              </div>
+            </a>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    
+    <div class="bestsellers-section__toggle-wrapper">
+      <button type="button" class="bestsellers-section__toggle">
+        <span class="toggle-text link-text">Show more products</span>
+        <span class="toggle-icon">
+<i class="fa-solid fa-chevron-down"></i>
+        </span>
+      </button>
+    </div>
+  </section>
+
+  <style>
+    /* Section basic styles */
+    .bestsellers-section {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+    .bestsellers-section__title,
+    .bestsellers-section__description {
+      margin: 0 0 20px 0;
+    }
+
+    /* Product tile styles */
+    .bestsellers-section__products-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: {{ section.settings.horizontal_spacing_desktop }}px {{ section.settings.vertical_spacing_desktop }}px;
+    }
+    .bestsellers-section__product-block {
+      /* Three tiles per row */
+      flex: 1 1 calc(33.333% - {{ section.settings.horizontal_spacing_desktop }}px);
+      box-sizing: border-box;
+    }
+
+    /* Fixed tile height */
+    .product-tile {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      height: 110px; /* Fixed height for all tiles */
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 8px;
+    }
+    .product-tile__img {
+      flex: 0 0 90px;
+      margin-right: 8px;
+      position: relative;
+      width: 90px;
+      height: 90px;
+      overflow: hidden;
+    }
+    .product-tile__img img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .product-tile__info {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 4px;  /* Increased vertical spacing */
+    }
+    .product-tile__name {
+      font-size: {{ section.settings.product_name_size_desktop }}px;
+      color: {{ section.settings.product_name_color }};
+      margin: 0;
+      font-weight: 600;
+      line-height: 1.1;
+    }
+    .product-tile__stock {
+      font-size: {{ section.settings.stock_size_desktop }}px;
+      color: {{ section.settings.stock_color }};
+      margin: 0;
+      line-height: 1.1;
+      position: relative;
+    }
+    .product-tile__price {
+      font-size: {{ section.settings.price_size_desktop }}px;
+      color: {{ section.settings.price_color }};
+      margin: 6px 0 0 0;  /* Extra top margin */
+      font-weight: bold;
+      line-height: 1.1;
+    }
+
+    /* Underline stock text with a dotted line */
+    .dotted-underline {
+      text-decoration: underline dotted;
+    }
+
+    /* Tooltip styles */
+    .product-tile__tooltip {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      z-index: 999;
+      max-width: 200px;
+      background: {{ section.settings.tooltip_bg_color }};
+      color: {{ section.settings.tooltip_text_color }};
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      margin-top: 4px;
+    }
+    .tooltip-enabled:hover + .product-tile__tooltip {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Toggle button styles */
+    .bestsellers-section__toggle-wrapper {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .bestsellers-section__toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      color: inherit;
+      display: inline-flex;
+      align-items: center;
+    }
+    .bestsellers-section__toggle .toggle-icon {
+      display: inline-block;
+      font-family: sans-serif;
+      font-weight: bold;
+      margin-left: 5px;
+      transition: transform 0.3s ease;
+      /* Using Unicode arrow */
+      content: "\25BC"; /* ▼ */
+    }
+    .bestsellers-section__toggle.expanded .toggle-icon {
+      transform: rotate(180deg);
+    }
+
+    /* Link styles */
+    .bestsellers-section__product-link {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Responsive styles */
+    #{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_desktop }}px;
+      padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    }
+    @media (max-width: 767px) {
+      #{{ section.id }} {
+        padding-top: {{ section.settings.padding_top_mobile }}px;
+        padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+      }
+      /* For mobile, each product block spans full width */
+      .bestsellers-section__product-block {
+        flex: 1 1 100%;
+      }
+    }
+    #{{ section.id }} .bestsellers-section__title {
+      font-size: {{ section.settings.title_size_desktop }}px;
+      color: {{ section.settings.title_color }};
+    }
+    @media (max-width: 767px) {
+      #{{ section.id }} .bestsellers-section__title {
+        font-size: {{ section.settings.title_size_mobile }}px;
+      }
+    }
+    #{{ section.id }} .bestsellers-section__description {
+      font-size: {{ section.settings.description_size_desktop }}px;
+      color: {{ section.settings.description_color }};
+    }
+    @media (max-width: 767px) {
+      #{{ section.id }} .bestsellers-section__description {
+        font-size: {{ section.settings.description_size_mobile }}px;
+      }
+    }
+    #{{ section.id }} .product-tile__name {
+      font-size: {{ section.settings.product_name_size_desktop }}px;
+    }
+    @media (max-width: 767px) {
+      #{{ section.id }} .product-tile__name {
+        font-size: {{ section.settings.product_name_size_mobile }}px;
+      }
+    }
+    #{{ section.id }} .product-tile__price {
+      font-size: {{ section.settings.price_size_desktop }}px;
+    }
+    @media (max-width: 767px) {
+      #{{ section.id }} .product-tile__price {
+        font-size: {{ section.settings.price_size_mobile }}px;
+      }
+    }
+    #{{ section.id }} .product-tile__stock {
+      font-size: {{ section.settings.stock_size_desktop }}px;
+    }
+    @media (max-width: 767px) {
+      #{{ section.id }} .product-tile__stock {
+        font-size: {{ section.settings.stock_size_mobile }}px;
+      }
+    }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var section = document.getElementById('{{ section.id }}');
+      if (!section) return;
+      
+      var wrapper = section.querySelector('.bestsellers-section__products-wrapper');
+      var toggleBtn = section.querySelector('.bestsellers-section__toggle');
+      var toggleIcon = section.querySelector('.bestsellers-section__toggle .toggle-icon');
+      if (!wrapper || !toggleBtn) return;
+      
+      var products = wrapper.querySelectorAll('.bestsellers-section__product-block');
+      var mobileLimit = parseInt(wrapper.getAttribute('data-mobile-limit')) || 2;
+      var desktopLimit = parseInt(wrapper.getAttribute('data-desktop-limit')) || 3;
+      
+      function checkLimits() {
+        var isMobile = window.innerWidth < 768;
+        var limit = isMobile ? mobileLimit : desktopLimit;
+        products.forEach(function(item, index) {
+          item.style.display = index < limit ? 'block' : 'none';
+        });
+        // Show toggle only if product count exceeds limit and on desktop
+        if (products.length > limit && !isMobile) {
+          toggleBtn.style.display = 'inline-flex';
+        } else {
+          toggleBtn.style.display = 'none';
+        }
+      }
+      
+      checkLimits();
+      window.addEventListener('resize', checkLimits);
+      
+      toggleBtn.addEventListener('click', function() {
+        if (toggleBtn.classList.contains('expanded')) {
+          toggleBtn.classList.remove('expanded');
+          section.querySelector('.toggle-text').textContent = 'Show more products';
+          toggleIcon.style.transform = 'rotate(0deg)';
+          checkLimits();
+        } else {
+          toggleBtn.classList.add('expanded');
+          section.querySelector('.toggle-text').textContent = 'Show less products';
+          toggleIcon.style.transform = 'rotate(180deg)';
+          products.forEach(function(item) {
+            item.style.display = 'block';
+          });
+        }
+      });
+    });
+  </script>
+
+{% endif %}
+
+{% schema %}
+{
+  "name": "bestsellers-grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "custom_classes",
+      "label": "Custom classes"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Section description"
+    },
+    {
+      "type": "product_list",
+      "id": "products",
+      "label": "Select products"
+    },
+    {
+      "type": "text",
+      "id": "stock_text",
+      "label": "Stock status text",
+      "info": "If you want to override the automatic stock message, enter your text here."
+    },
+    {
+      "type": "text",
+      "id": "tooltip_in_stock",
+      "label": "Tooltip for in-stock products",
+      "default": "We have the goods in stock. We usually send the shipment to you within 24 hours of payment. Delivery time usually within two working days."
+    },
+    {
+      "type": "text",
+      "id": "tooltip_out_of_stock",
+      "label": "Tooltip for out-of-stock products",
+      "default": "We need to check the product availability with our supplier. Please contact us for details."
+    },
+    {
+      "type": "range",
+      "id": "title_size_desktop",
+      "label": "Title size desktop",
+      "min": 12,
+      "max": 60,
+      "step": 1,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "title_size_mobile",
+      "label": "Title size mobile",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color"
+    },
+    {
+      "type": "range",
+      "id": "description_size_desktop",
+      "label": "Description size desktop",
+      "min": 12,
+      "max": 60,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "description_size_mobile",
+      "label": "Description size mobile",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description color"
+    },
+    {
+      "type": "range",
+      "id": "product_name_size_desktop",
+      "label": "Product name size desktop",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "product_name_size_mobile",
+      "label": "Product name size mobile",
+      "min": 12,
+      "max": 30,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "product_name_color",
+      "label": "Product name color"
+    },
+    {
+      "type": "range",
+      "id": "price_size_desktop",
+      "label": "Price size desktop",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "price_size_mobile",
+      "label": "Price size mobile",
+      "min": 12,
+      "max": 30,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "price_color",
+      "label": "Price color"
+    },
+    {
+      "type": "range",
+      "id": "stock_size_desktop",
+      "label": "Stock size desktop",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "stock_size_mobile",
+      "label": "Stock size mobile",
+      "min": 12,
+      "max": 30,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "color",
+      "id": "stock_color",
+      "label": "Stock color"
+    },
+    {
+      "type": "color",
+      "id": "upon_request_color",
+      "label": "Upon request color"
+    },
+    {
+      "type": "color",
+      "id": "tooltip_bg_color",
+      "label": "Tooltip background"
+    },
+    {
+      "type": "color",
+      "id": "tooltip_text_color",
+      "label": "Tooltip text color"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding top desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding bottom desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "vertical_spacing_desktop",
+      "label": "Vertical spacing desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "vertical_spacing_mobile",
+      "label": "Vertical spacing mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "horizontal_spacing_desktop",
+      "label": "Horizontal spacing desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "horizontal_spacing_mobile",
+      "label": "Horizontal spacing mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "color",
+      "id": "section_bg_color",
+      "label": "Section background color"
+    }
+  ],
+  "presets": [
+    {
+      "name": "bestsellers-grid"
+    }
+  ]
+}
+{% endschema %}

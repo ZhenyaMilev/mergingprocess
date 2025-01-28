@@ -1,0 +1,392 @@
+<section id="section-{{ section.id }}" class="product-tabs-section{% if section.settings.custom_class != blank %} {{ section.settings.custom_class }}{% endif %}">
+  {% if section.settings.section_title != blank %}
+    <h2 class="section-title">{{ section.settings.section_title }}</h2>
+  {% endif %}
+  <ul class="tab-headings" id="description-section">
+    {% for block in section.blocks %}
+      <li class="tab-heading{% if forloop.first %} active{% endif %}" data-tab-target="tab-{{ block.id }}">
+        {{ block.settings.tab_title }}
+      </li>
+    {% endfor %}
+  </ul>
+  {% for block in section.blocks %}
+    <div class="tab-content{% if forloop.first %} active{% endif %}" id="tab-{{ block.id }}">
+      {% if block.type == 'description' %}
+        {{ product.description }}
+      {% elsif block.type == 'files' %}
+        {% if product.metafields.custom.files_url %}
+          <ul class="files-list">
+            {% for file in product.metafields.custom.files_url.value %}
+              <li class="file-item">
+                <a href="{{ file.url }}" target="_blank" class="file-link block-for-link-default-hover">
+                  <span class="file-icon">📄</span>
+                  <span class="link-text">{{ file.text }}</span>
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      {% elsif block.type == 'discussion' %}
+{%- assign contact_form_id = 'ContactForm-' | append: block.id -%}
+{%- form 'contact', id: contact_form_id, class: 'discussion-form' -%}
+  {%- if form.id == contact_form_id -%}
+    {%- if form.posted_successfully? -%}
+      <p class="form-message success">Thank you for your message!</p>
+    {%- endif -%}
+    {%- if form.errors -%}
+      <p class="form-message error">There was an error submitting the form.</p>
+    {%- endif -%}
+  {%- endif -%}
+  <input 
+    type="text" 
+    name="contact[name]" 
+    placeholder="{{ block.settings.name_placeholder }}" 
+    required
+  >
+  <input 
+    type="email" 
+    name="contact[email]" 
+    placeholder="{{ block.settings.email_placeholder }}" 
+    required
+  >
+  <input 
+    type="text" 
+    name="contact[title]" 
+    placeholder="{{ block.settings.title_placeholder }}" 
+    required
+  >
+  <textarea 
+    name="contact[body]" 
+    placeholder="Comment"
+    required
+  ></textarea>
+  {% if block.settings.button_subtext != blank %}
+    <div class="button-subtext  block-for-link-default-hover">{{ block.settings.button_subtext }}</div>
+  {% endif %}
+  <button class="button-style-1" type="submit">{{ block.settings.button_text }}</button>
+{%- endform -%}
+
+      {% endif %}
+    </div>
+  {% endfor %}
+</section>
+
+<style>
+#section-{{ section.id }}.product-tabs-section {
+  --section-background-color: {{ section.settings.background_color }};
+  --section-text-color: {{ section.settings.text_color }};
+  --section-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
+  --section-padding-top-desktop: {{ section.settings.padding_top_desktop }}px;
+  --section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
+  --section-padding-bottom-desktop: {{ section.settings.padding_bottom_desktop }}px;
+  --section-title-size-mobile: {{ section.settings.title_size_mobile }}px;
+  --section-title-size-desktop: {{ section.settings.title_size_desktop }}px;
+  --section-tab-size-desktop: {{ section.settings.tab_size_desktop }}px;
+  --section-tab-size-mobile: {{ section.settings.tab_size_mobile }}px;
+  background-color: var(--section-background-color);
+  color: var(--section-text-color);
+  padding-top: var(--section-padding-top-mobile);
+  padding-bottom: var(--section-padding-bottom-mobile);
+}
+.files-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.file-item {
+  display: flex;
+  align-items: center;
+}
+
+.file-link {
+  text-decoration: none;
+  color: inherit;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+}
+
+.file-icon {
+  margin-right: 8px;
+  font-size: 18px;
+}
+@media (min-width: 768px) {
+  #section-{{ section.id }}.product-tabs-section {
+    padding-top: var(--section-padding-top-desktop);
+    padding-bottom: var(--section-padding-bottom-desktop);
+  }
+}
+#section-{{ section.id }}.product-tabs-section .section-title {
+  font-size: var(--section-title-size-mobile);
+  margin-bottom: 1rem;
+}
+@media (min-width: 768px) {
+  #section-{{ section.id }}.product-tabs-section .section-title {
+    font-size: var(--section-title-size-desktop);
+  }
+}
+#section-{{ section.id }}.product-tabs-section .tab-headings {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+  gap: 1.4rem;
+}
+#section-{{ section.id }}.product-tabs-section .tab-heading {
+  cursor: pointer;
+  font-size: var(--section-tab-size-desktop);
+}
+
+.product-tabs-section .button-subtext p {
+  margin: 0;
+}
+
+@media only screen and (max-width: 768px) {
+  #section-{{ section.id }}.product-tabs-section .tab-heading {
+    cursor: pointer;
+    font-size: var(--section-tab-size-mobile);
+  }
+}
+#section-{{ section.id }}.product-tabs-section .tab-heading.active {
+  font-weight: bold;
+  border-bottom: 1px solid;
+}
+#section-{{ section.id }}.product-tabs-section .tab-content {
+  display: none;
+  margin-top: 1rem;
+}
+#section-{{ section.id }}.product-tabs-section .tab-content.active {
+  display: block;
+}
+#section-{{ section.id }}.product-tabs-section .discussion-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.discussion-form input {
+  padding: 10px;
+  border: 1px solid #0000001f;
+  border-radius: 4px;
+  width: 100%;
+  font-family: var(--font-body-family);
+}
+
+.discussion-form textarea {
+  padding: 10px;
+  border: 1px solid #0000001f;
+  border-radius: 4px;
+  width: 100%;
+  min-height: 140px;
+  font-family: var(--font-body-family);
+}
+
+#section-{{ section.id }}.product-tabs-section .form-message.success {
+  color: #008000;
+}
+#section-{{ section.id }}.product-tabs-section .form-message.error {
+  color: #d00;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var section = document.getElementById('section-{{ section.id }}');
+  if(!section) return;
+  var headings = section.querySelectorAll('.tab-heading');
+  var contents = section.querySelectorAll('.tab-content');
+  headings.forEach(function(heading) {
+    heading.addEventListener('click', function() {
+      var target = heading.getAttribute('data-tab-target');
+      headings.forEach(function(h) { h.classList.remove('active'); });
+      heading.classList.add('active');
+      contents.forEach(function(c) {
+        if(c.id === target) {
+          c.classList.add('active');
+        } else {
+          c.classList.remove('active');
+        }
+      });
+    });
+  });
+});
+</script>
+
+{% schema %}
+{
+  "name": "Tabs Section",
+	"class": "page-width",
+	"tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section title"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top (mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding top (desktop)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom (mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding bottom (desktop)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 30
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "title_size_mobile",
+      "label": "Title size (mobile)",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "tab_size_mobile",
+      "label": "Tab size (mobile)",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "title_size_desktop",
+      "label": "Title size (desktop)",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "tab_size_desktop",
+      "label": "Tab size (desktop)",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "default": 24
+    },
+    {
+      "type": "text",
+      "id": "custom_class",
+      "label": "Custom class"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "description",
+      "name": "Description",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_title",
+          "label": "Tab title"
+        }
+      ]
+    },
+    {
+      "type": "files",
+      "name": "Related Files",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_title",
+          "label": "Tab title"
+        }
+      ]
+    },
+    {
+      "type": "discussion",
+      "name": "Discussion",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_title",
+          "label": "Tab title"
+        },
+        {
+          "type": "text",
+          "id": "name_placeholder",
+          "label": "Name placeholder"
+        },
+        {
+          "type": "text",
+          "id": "email_placeholder",
+          "label": "Email placeholder"
+        },
+        {
+          "type": "text",
+          "id": "title_placeholder",
+          "label": "Title placeholder"
+        },
+        {
+          "type": "text",
+          "id": "comment_placeholder",
+          "label": "Comment placeholder"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text"
+        },
+        {
+          "type": "richtext",
+          "id": "button_subtext",
+          "label": "Text under button"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Tabs Section"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,82 @@
+  <div id="ask-salesman-modal" class="ask-salesman-modal">
+    <div class="ask-salesman-modal-content">
+      <span id="ask-salesman-close" class="ask-salesman-close">&times;</span>
+
+      <div class="ask-salesman-popup-header">
+        <h2>Ask a salesman</h2>
+        <p class="ask-salesman-popup-note">Fields marked with * must be filled.</p>
+      </div>
+
+      <form method="post" action="/contact#ask-salesman-modal" accept-charset="UTF-8" class="ask-salesman-form" id="AskSalesmanForm">
+        <input type="hidden" name="form_type" value="contact">
+        <input type="hidden" name="contact[product_link]" value="{{ product.url | absolute_url }}">
+
+        <div class="form-group">
+          <label for="AskSalesmanEmail" style="color: var(--ask-salesman-label-color);">Your email *</label>
+          <input type="email" id="AskSalesmanEmail" name="contact[email]" placeholder="Enter your email" required>
+        </div>
+
+        <div class="form-group">
+          <label for="AskSalesmanPhone" style="color: var(--ask-salesman-label-color);">Phone *</label>
+          <input type="text" id="AskSalesmanPhone" name="contact[phone]" placeholder="Enter your phone number" required>
+        </div>
+
+        <div class="form-group">
+          <label for="AskSalesmanMessage" style="color: var(--ask-salesman-label-color);">Message *</label>
+          <textarea id="AskSalesmanMessage" name="contact[body]" rows="5" placeholder="Enter your message" required></textarea>
+        </div>
+
+        <div class="ask-salesman-privacy-note" style="font-size: 12px; margin-bottom: 1rem;">
+          By submitting the message, you agree with the privacy policy.
+        </div>
+
+        <button type="submit" id="ask-salesman-submit" class="ask-salesman-submit" style="background-color: #777E83; color: #ffffff;" disabled>
+          Submit
+        </button>
+      </form>
+    </div>
+  </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var openPopupButton = document.getElementById('ask-sales-man-open-popup') || document.getElementById('ask-salesman-open-popup');
+    var modal = document.getElementById('ask-sales-man-modal') || document.getElementById('ask-salesman-modal');
+    var closeModal = document.getElementById('ask-sales-man-close') || document.getElementById('ask-salesman-close');
+
+    if (openPopupButton && modal) {
+      openPopupButton.addEventListener('click', function() {
+        modal.style.display = 'block';
+        validateForm();
+      });
+    }
+    if (closeModal) {
+      closeModal.addEventListener('click', function() {
+        modal.style.display = 'none';
+      });
+    }
+    window.addEventListener('click', function(event) {
+      if (event.target == modal) {
+        modal.style.display = 'none';
+      }
+    });
+
+    var form = document.getElementById('AskSalesmanForm');
+    var submitButton = document.getElementById('ask-salesman-submit');
+    var requiredFields = [
+      document.getElementById('AskSalesmanEmail'),
+      document.getElementById('AskSalesmanPhone'),
+      document.getElementById('AskSalesmanMessage')
+    ];
+
+    function validateForm() {
+      var allFilled = requiredFields.every(function(field) {
+        return field.value.trim() !== "";
+      });
+      submitButton.disabled = !allFilled;
+    }
+
+    requiredFields.forEach(function(field) {
+      field.addEventListener('input', validateForm);
+    });
+  });
+</script>

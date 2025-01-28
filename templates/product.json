@@ -1,0 +1,503 @@
+{
+  "sections": {
+    "breadcrumbs_exXMED": {
+      "type": "breadcrumbs",
+      "settings": {
+        "breadcrumbs_enabled": true,
+        "breadcrumbs_menu_definition": "main-menu",
+        "prefer_shortest_path": false,
+        "separator_shape": "triangle",
+        "font_size": 14,
+        "color_scheme": "",
+        "enable_divider": false,
+        "divider_color": "#ccc",
+        "padding_top": 12,
+        "padding_bottom": 12
+      }
+    },
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "inventory_WbBbkc": {
+          "type": "inventory",
+          "settings": {
+            "text_style": "body",
+            "inventory_threshold": 3,
+            "show_inventory_quantity": true
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": false,
+            "show_gift_card_recipient": true
+          }
+        },
+        "client_request_h3CRbc": {
+          "type": "client-request",
+          "settings": {}
+        },
+        "custom_liquid_4HhJtL": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<style>\n.icon-list-custom {\n    display: flex;\n    flex-wrap: wrap;\n    list-style: none;\n    justify-content: center;\n    margin: 0;\n    gap: 8px;\n    padding: 0;\n}\n.icon-svg {\n    width: 40px; \/* Adjust the size of the icons as needed *\/\n    height: auto;\n}\n<\/style>\n\n<ul class=\"icon-list-custom\" role=\"list\">\n  {% assign enabled_payment_types = 'visa,master,apple_pay,google_pay,shopify_pay' | remove: ' ' | split: ',' %}\n  {% for type in enabled_payment_types %}\n    <li>{{ type | payment_type_svg_tag: class: 'icon-svg' }}<\/li>\n  {% endfor %}\n<\/ul>"
+          }
+        }
+      },
+      "block_order": [
+        "title",
+        "price",
+        "inventory_WbBbkc",
+        "variant_picker",
+        "quantity_selector",
+        "buy_buttons",
+        "client_request_h3CRbc",
+        "custom_liquid_4HhJtL"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "color_scheme": "scheme-1",
+        "media_size": "medium",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "gallery_layout": "thumbnail_slider",
+        "media_position": "left",
+        "image_zoom": "hover",
+        "mobile_thumbnails": "hide",
+        "hide_variants": true,
+        "enable_video_looping": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "featured_collection_QTdnQg": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Related products",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "collection": "new-product",
+        "products_to_show": 4,
+        "columns_desktop": 6,
+        "full_width": false,
+        "show_view_all": false,
+        "view_all_style": "solid",
+        "enable_desktop_slider": false,
+        "color_scheme": "scheme-0ff556c9-93bb-49f2-910b-68b9da618935",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
+    "product_tabs_info_custom_TeDK3L": {
+      "type": "product-tabs-info-custom",
+      "blocks": {
+        "description_MGn8bF": {
+          "type": "description",
+          "settings": {
+            "tab_title": "Description"
+          }
+        },
+        "files_g6Th99": {
+          "type": "files",
+          "settings": {
+            "tab_title": "Related Files"
+          }
+        },
+        "discussion_rYQ8th": {
+          "type": "discussion",
+          "settings": {
+            "tab_title": "Discussion",
+            "name_placeholder": "Name ",
+            "email_placeholder": "Email ",
+            "title_placeholder": "Title ",
+            "comment_placeholder": "Comment ",
+            "button_text": "Send a comment",
+            "button_subtext": "<p>By posting a comment, you agree to the <a href=\"#\" target=\"_blank\" title=\"#\">privacy policy<\/a> <\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "description_MGn8bF",
+        "files_g6Th99",
+        "discussion_rYQ8th"
+      ],
+      "settings": {
+        "section_title": "",
+        "padding_top_mobile": 30,
+        "padding_top_desktop": 42,
+        "padding_bottom_mobile": 20,
+        "padding_bottom_desktop": 30,
+        "background_color": "#f6f6f6",
+        "text_color": "#666666",
+        "title_size_mobile": 24,
+        "tab_size_mobile": 18,
+        "title_size_desktop": 16,
+        "tab_size_desktop": 24,
+        "custom_class": "page-width"
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "disabled": true,
+      "settings": {
+        "heading": "You may also like",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "columns_mobile": "2",
+        "padding_top": 36,
+        "padding_bottom": 28
+      }
+    },
+    "173654610297d311b8": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_LgdGPm": {
+          "type": "shopify:\/\/apps\/judge-me-reviews\/blocks\/review_widget\/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_LgdGPm"
+      ],
+      "custom_css": [
+        ".jdgm-write-rev-link {font-weight: normal;}",
+        ".jdgm-rev-widg__header {margin-top: 40px; margin-bottom: 40px;}"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "sp_media_grid_V7WNR8": {
+      "type": "sp-media-grid",
+      "blocks": {
+        "video_aQ8EGF": {
+          "type": "video",
+          "settings": {
+            "video": "shopify:\/\/files\/videos\/videoplayback.mp4",
+            "link": "",
+            "video_inline": true,
+            "video_autoplay": false,
+            "video_loop": true,
+            "video_controls": false,
+            "video_muted": false
+          }
+        },
+        "video_bKGY3x": {
+          "type": "video",
+          "settings": {
+            "video": "shopify:\/\/files\/videos\/videoplayback.mp4",
+            "link": "",
+            "video_inline": true,
+            "video_autoplay": false,
+            "video_loop": true,
+            "video_controls": false,
+            "video_muted": false
+          }
+        },
+        "video_MfYajW": {
+          "type": "video",
+          "settings": {
+            "video": "shopify:\/\/files\/videos\/videoplayback.mp4",
+            "link": "",
+            "video_inline": true,
+            "video_autoplay": false,
+            "video_loop": true,
+            "video_controls": false,
+            "video_muted": false
+          }
+        },
+        "video_Qg8CHD": {
+          "type": "video",
+          "settings": {
+            "video": "shopify:\/\/files\/videos\/videoplayback.mp4",
+            "link": "",
+            "video_inline": true,
+            "video_autoplay": false,
+            "video_loop": true,
+            "video_controls": false,
+            "video_muted": false
+          }
+        }
+      },
+      "block_order": [
+        "video_aQ8EGF",
+        "video_bKGY3x",
+        "video_MfYajW",
+        "video_Qg8CHD"
+      ],
+      "settings": {
+        "override_fonts": false,
+        "headline_font": "roboto_n4",
+        "text_font": "roboto_n4",
+        "text_size": 10,
+        "mobile_text_size": 15,
+        "text_line_height": "inherit",
+        "headline_size": 30,
+        "mobile_headline_size": 28,
+        "headline_line_height": "inherit",
+        "text_color": "#111111",
+        "link_color": "#005bd3",
+        "show_on_device": "all",
+        "section_background_color": "",
+        "section_background_image_color": "",
+        "section_background_size": "cover",
+        "section_padding_top_bottom": 0,
+        "mobile_section_padding_top_bottom": 0,
+        "section_padding_left_right": 25,
+        "mobile_section_padding_left_right": 25,
+        "container_background_color": "",
+        "container_max_width": 1000,
+        "container_padding_top_bottom": 10,
+        "mobile_container_padding_top_bottom": 10,
+        "container_padding_left_right": 10,
+        "mobile_container_padding_left_right": 10,
+        "element_spacing": 15,
+        "container_radius": 0,
+        "container_shadow": false,
+        "container_border_size": 0,
+        "container_border_color": "#888888",
+        "grid_gap": 20,
+        "mobile_display": "slideshow",
+        "mobile_columns": "1fr",
+        "progress_background_color": "linear-gradient(177deg, rgba(17, 17, 17, .25) 3%, rgba(17, 17, 17, 0.25) 100%)",
+        "progress_foreground_color": "linear-gradient(177deg, rgba(17, 17, 17, 1) 3%, rgba(17, 17, 17, 1) 100%)",
+        "indicator_color": "#111111",
+        "enable_autoplay": false,
+        "autoplay_time": "5000",
+        "media_aspect_ratio": "auto",
+        "big_play_pause_button": true,
+        "media_radius": 5,
+        "media_shadow": true,
+        "show_hover_effect": true,
+        "image_width": 800,
+        "mobile_image_width": 600,
+        "text_alignment": "center",
+        "mobile_text_alignment": "center",
+        "headline": "Testimonials",
+        "text": "",
+        "headline_spacing": 15
+      }
+    },
+    "collapsible_content_UQcQAH": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_row_xDhijp": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Frequently Asked Questions",
+            "icon": "none",
+            "row_content": "<p>Frequently Asked Questions<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_NYDPPi": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Frequently Asked Questions",
+            "icon": "none",
+            "row_content": "<p>Frequently Asked Questions<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_UDPMT9": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Frequently Asked Questions",
+            "icon": "none",
+            "row_content": "<p>Frequently Asked Questions<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_jmThnt": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Frequently Asked Questions",
+            "icon": "none",
+            "row_content": "<p>Frequently Asked Questions<\/p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_xDhijp",
+        "collapsible_row_NYDPPi",
+        "collapsible_row_UDPMT9",
+        "collapsible_row_jmThnt"
+      ],
+      "custom_css": [],
+      "settings": {
+        "caption": "",
+        "heading": "FAQ",
+        "heading_size": "h2",
+        "heading_alignment": "center",
+        "layout": "none",
+        "color_scheme": "",
+        "container_color_scheme": "",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
+    "1737398693bb8c533f": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_featured_carousel_t9Ln8e": {
+          "type": "shopify:\/\/apps\/judge-me-reviews\/blocks\/featured_carousel\/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "maxwidth": 1400
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_featured_carousel_t9Ln8e"
+      ],
+      "custom_css": [
+        ".jdgm-carousel__right-arrow,.jdgm-carousel__left-arrow {border-width: 3px;}"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "ss_instafeed_NLTR7K": {
+      "type": "ss-instafeed",
+      "blocks": {
+        "image_FKpmwd": {
+          "type": "image",
+          "settings": {
+            "gallery_photo": "shopify:\/\/shop_images\/471256761_442958128881077_6071312916046371046_n.jpg",
+            "gallery_url": "https:\/\/www.instagram.com\/hobbydrone.cz\/"
+          }
+        },
+        "image_899CVf": {
+          "type": "image",
+          "settings": {
+            "gallery_photo": "shopify:\/\/shop_images\/471201545_442967942213429_1513075902899421389_n.jpg",
+            "gallery_url": "https:\/\/www.instagram.com\/hobbydrone.cz\/"
+          }
+        },
+        "image_LeDLeM": {
+          "type": "image",
+          "settings": {
+            "gallery_photo": "shopify:\/\/shop_images\/471216057_440403899136500_8677378140512965750_n.jpg",
+            "gallery_url": "https:\/\/www.instagram.com\/hobbydrone.cz\/"
+          }
+        },
+        "image_HNN3Af": {
+          "type": "image",
+          "settings": {
+            "gallery_photo": "shopify:\/\/shop_images\/470223263_437454679431422_6687889688530215985_n.jpg",
+            "gallery_url": "https:\/\/www.instagram.com\/hobbydrone.cz\/"
+          }
+        },
+        "image_dBFPDc": {
+          "type": "image",
+          "settings": {
+            "gallery_photo": "shopify:\/\/shop_images\/470172370_435402629636627_1243946244681272485_n.jpg",
+            "gallery_url": "https:\/\/www.instagram.com\/hobbydrone.cz\/"
+          }
+        },
+        "image_m76zgC": {
+          "type": "image",
+          "settings": {
+            "gallery_photo": "shopify:\/\/shop_images\/470214810_433275066516050_1914791240005198550_n.jpg",
+            "gallery_url": "https:\/\/www.instagram.com\/hobbydrone.cz\/"
+          }
+        },
+        "image_cYFabQ": {
+          "type": "image",
+          "settings": {
+            "gallery_photo": "shopify:\/\/shop_images\/470149925_431971353313088_5246303252631764080_n.jpg",
+            "gallery_url": "https:\/\/www.instagram.com\/hobbydrone.cz\/"
+          }
+        },
+        "image_Nzxa73": {
+          "type": "image",
+          "settings": {
+            "gallery_photo": "shopify:\/\/shop_images\/469557125_430663570110533_6125593076365758312_n.jpg",
+            "gallery_url": "https:\/\/www.instagram.com\/hobbydrone.cz\/"
+          }
+        }
+      },
+      "block_order": [
+        "image_FKpmwd",
+        "image_899CVf",
+        "image_LeDLeM",
+        "image_HNN3Af",
+        "image_dBFPDc",
+        "image_m76zgC",
+        "image_cYFabQ",
+        "image_Nzxa73"
+      ],
+      "custom_css": [
+        ".ss-instafeed-header {font-weight: 500;}",
+        ".ss-instafeed-header {font-size: 23px; text-transform: lowercase;}",
+        ".ss-instafeed-header::first-letter {text-transform: uppercase;}"
+      ],
+      "settings": {
+        "background-color": "rgba(0,0,0,0)",
+        "text-color": "#121212",
+        "hide_image_mobile": 2,
+        "insta_url": "https:\/\/www.instagram.com\/hobbydrone.cz\/",
+        "instafeed_title": "Follow on Instagram",
+        "hashtag_title": "#HobbyDrone",
+        "insta_handle": "@hobbydrone.cz",
+        "header_size": 20,
+        "hashtag_size": 16,
+        "handle_size": 12,
+        "padding_image": 0,
+        "padding_top": 36,
+        "padding_bottom": 72
+      }
+    }
+  },
+  "order": [
+    "breadcrumbs_exXMED",
+    "main",
+    "featured_collection_QTdnQg",
+    "product_tabs_info_custom_TeDK3L",
+    "related-products",
+    "173654610297d311b8",
+    "sp_media_grid_V7WNR8",
+    "collapsible_content_UQcQAH",
+    "1737398693bb8c533f",
+    "ss_instafeed_NLTR7K"
+  ]
+}

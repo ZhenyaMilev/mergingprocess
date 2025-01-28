@@ -1,0 +1,269 @@
+{
+  "sections": {
+    "image_banner_YgigDA": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_zC6PGy": {
+          "type": "heading",
+          "settings": {
+            "heading": "Collection title",
+            "heading_size": "h1"
+          }
+        },
+        "text_rxUbVd": {
+          "type": "text",
+          "settings": {
+            "text": "Description of collection",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_zC6PGy",
+        "text_rxUbVd"
+      ],
+      "settings": {
+        "image_overlay_opacity": 0,
+        "image_height": "medium",
+        "desktop_content_position": "middle-center",
+        "show_text_box": true,
+        "desktop_content_alignment": "center",
+        "color_scheme": "",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": true
+      }
+    },
+    "breadcrumbs_KwG6HH": {
+      "type": "breadcrumbs",
+      "settings": {
+        "breadcrumbs_enabled": true,
+        "breadcrumbs_menu_definition": "main-menu",
+        "prefer_shortest_path": false,
+        "separator_shape": "triangle",
+        "font_size": 14,
+        "color_scheme": "",
+        "enable_divider": false,
+        "divider_color": "#cccccc",
+        "padding_top": 12,
+        "padding_bottom": 12
+      }
+    },
+    "subcollection_menu_83RpXP": {
+      "type": "subcollection-menu",
+      "settings": {
+        "title": "{{ collection.title }}",
+        "background": "",
+        "title_color": "",
+        "link_color": "",
+        "link_hover_color": "",
+        "title_size_desktop": 24,
+        "title_size_mobile": 18,
+        "padding_top_desktop": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_desktop": 20,
+        "padding_bottom_mobile": 15,
+        "vertical_gap_desktop": 10,
+        "vertical_gap_mobile": 8,
+        "horizontal_gap_desktop": 10,
+        "horizontal_gap_mobile": 8,
+        "custom_class": "page-width"
+      }
+    },
+    "bestsellers_grid_HEG3HM": {
+      "type": "bestsellers-grid",
+      "settings": {
+        "custom_classes": "page-width",
+        "title": "Bestsellers",
+        "description": "",
+        "products": "{{ collection.metafields.custom.bestsellers.value }}",
+        "stock_text": "",
+        "tooltip_in_stock": "We have the goods in stock. We usually send the shipment to you within 24 hours of payment. Delivery time usually within two working days.",
+        "tooltip_out_of_stock": "We need to check the product availability with our supplier. Please contact us for details.",
+        "title_size_desktop": 24,
+        "title_size_mobile": 20,
+        "title_color": "",
+        "description_size_desktop": 16,
+        "description_size_mobile": 14,
+        "description_color": "",
+        "product_name_size_desktop": 16,
+        "product_name_size_mobile": 14,
+        "product_name_color": "",
+        "price_size_desktop": 16,
+        "price_size_mobile": 14,
+        "price_color": "",
+        "stock_size_desktop": 14,
+        "stock_size_mobile": 12,
+        "stock_color": "",
+        "upon_request_color": "#fd5f28",
+        "tooltip_bg_color": "#0f0f0f",
+        "tooltip_text_color": "#ffffff",
+        "padding_top_desktop": 20,
+        "padding_top_mobile": 15,
+        "padding_bottom_desktop": 4,
+        "padding_bottom_mobile": 15,
+        "vertical_spacing_desktop": 20,
+        "vertical_spacing_mobile": 10,
+        "horizontal_spacing_desktop": 20,
+        "horizontal_spacing_mobile": 10,
+        "section_bg_color": ""
+      }
+    },
+    "banner": {
+      "type": "main-collection-banner",
+      "disabled": true,
+      "settings": {
+        "show_collection_description": true,
+        "show_collection_image": false,
+        "color_scheme": "scheme-1"
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "settings": {
+        "products_per_page": 8,
+        "columns_desktop": 3,
+        "color_scheme": "scheme-78e3f6cf-fa08-4756-b63c-2c2617a1f147",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
+        "enable_filtering": true,
+        "filter_type": "vertical",
+        "enable_sorting": true,
+        "columns_mobile": "2",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "1737399109a9cdb2b7": {
+      "type": "apps",
+      "blocks": {
+        "searchanise_search_filter_app_block_njwNNU": {
+          "type": "shopify:\/\/apps\/searchanise-search-filter\/blocks\/app-block\/d8f24ada-02b1-458a-bbeb-5bf16d5c921e",
+          "settings": {}
+        },
+        "judge_me_reviews_featured_carousel_fDqjWM": {
+          "type": "shopify:\/\/apps\/judge-me-reviews\/blocks\/featured_carousel\/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "maxwidth": 1400
+          }
+        }
+      },
+      "block_order": [
+        "searchanise_search_filter_app_block_njwNNU",
+        "judge_me_reviews_featured_carousel_fDqjWM"
+      ],
+      "custom_css": [
+        ".jdgm-carousel__right-arrow,.jdgm-carousel__left-arrow {border-width: 3px;}"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "ss_instafeed_XzKK6n": {
+      "type": "ss-instafeed",
+      "blocks": {
+        "image_cLULqn": {
+          "type": "image",
+          "settings": {
+            "gallery_photo": "shopify:\/\/shop_images\/471256761_442958128881077_6071312916046371046_n.jpg",
+            "gallery_url": ""
+          }
+        },
+        "image_TkFPYg": {
+          "type": "image",
+          "settings": {
+            "gallery_photo": "shopify:\/\/shop_images\/471201545_442967942213429_1513075902899421389_n.jpg",
+            "gallery_url": ""
+          }
+        },
+        "image_A9gbLb": {
+          "type": "image",
+          "settings": {
+            "gallery_photo": "shopify:\/\/shop_images\/471216057_440403899136500_8677378140512965750_n.jpg",
+            "gallery_url": ""
+          }
+        },
+        "image_VXJiqR": {
+          "type": "image",
+          "settings": {
+            "gallery_photo": "shopify:\/\/shop_images\/470223263_437454679431422_6687889688530215985_n.jpg",
+            "gallery_url": ""
+          }
+        },
+        "image_eKXMdF": {
+          "type": "image",
+          "settings": {
+            "gallery_photo": "shopify:\/\/shop_images\/470172370_435402629636627_1243946244681272485_n.jpg",
+            "gallery_url": ""
+          }
+        },
+        "image_UnjKNp": {
+          "type": "image",
+          "settings": {
+            "gallery_photo": "shopify:\/\/shop_images\/470214810_433275066516050_1914791240005198550_n.jpg",
+            "gallery_url": ""
+          }
+        },
+        "image_KqD9rK": {
+          "type": "image",
+          "settings": {
+            "gallery_photo": "shopify:\/\/shop_images\/470149925_431971353313088_5246303252631764080_n.jpg",
+            "gallery_url": ""
+          }
+        },
+        "image_DCJyxA": {
+          "type": "image",
+          "settings": {
+            "gallery_photo": "shopify:\/\/shop_images\/469557125_430663570110533_6125593076365758312_n.jpg",
+            "gallery_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_cLULqn",
+        "image_TkFPYg",
+        "image_A9gbLb",
+        "image_VXJiqR",
+        "image_eKXMdF",
+        "image_UnjKNp",
+        "image_KqD9rK",
+        "image_DCJyxA"
+      ],
+      "custom_css": [
+        ".ss-instafeed-header {font-weight: 500;}",
+        ".ss-instafeed-header {font-size: 23px; text-transform: lowercase;}",
+        ".ss-instafeed-header::first-letter {text-transform: uppercase;}"
+      ],
+      "settings": {
+        "background-color": "rgba(0,0,0,0)",
+        "text-color": "#121212",
+        "hide_image_mobile": 2,
+        "insta_url": "https:\/\/www.instagram.com\/hobbydrone.cz\/",
+        "instafeed_title": "Follow on Instagram",
+        "hashtag_title": "#HobbyDrone",
+        "insta_handle": "@hobbydrone.cz",
+        "header_size": 18,
+        "hashtag_size": 16,
+        "handle_size": 12,
+        "padding_image": 0,
+        "padding_top": 36,
+        "padding_bottom": 72
+      }
+    }
+  },
+  "order": [
+    "image_banner_YgigDA",
+    "breadcrumbs_KwG6HH",
+    "subcollection_menu_83RpXP",
+    "bestsellers_grid_HEG3HM",
+    "banner",
+    "product-grid",
+    "1737399109a9cdb2b7",
+    "ss_instafeed_XzKK6n"
+  ]
+}

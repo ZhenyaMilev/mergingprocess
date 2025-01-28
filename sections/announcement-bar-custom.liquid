@@ -1,0 +1,552 @@
+{{ 'component-slideshow.css' | asset_url | stylesheet_tag }}
+{{ 'component-slider.css' | asset_url | stylesheet_tag }}
+
+{% comment %}
+  We check if all social links are blank; if so, set social_icons = false
+{% endcomment %}
+{% assign social_icons = true %}
+{% if settings.social_facebook_link == blank 
+      and settings.social_instagram_link == blank 
+      and settings.social_youtube_link == blank 
+      and settings.social_tiktok_link == blank 
+      and settings.social_twitter_link == blank 
+      and settings.social_pinterest_link == blank 
+      and settings.social_snapchat_link == blank 
+      and settings.social_tumblr_link == blank 
+      and settings.social_vimeo_link == blank %}
+  {% assign social_icons = false %}
+{% endif %}
+
+{% assign language_country_selector = false %}
+{% if section.settings.enable_country_selector or section.settings.enable_language_selector %}
+  {% assign language_country_selector = true %}
+{% endif %}
+
+{% assign announcement_bar = false %}
+{% if section.blocks.size > 0 %}
+  {% assign announcement_bar = true %}
+{% endif %}
+
+{% if social_icons %}
+  {{ 'component-list-social.css' | asset_url | stylesheet_tag }}
+{% endif %}
+
+{% comment %}
+  Separate blocks by type:
+  - announcements (original ones)
+  - text_icon
+  - menu_block (with link_list)
+{% endcomment %}
+{% assign announcement_blocks = section.blocks | where: 'type', 'announcement' %}
+{% assign text_icon_blocks = section.blocks | where: 'type', 'text_icon' %}
+{% assign menu_blocks       = section.blocks | where: 'type', 'menu_block' %}
+
+<div
+  class="utility-bar utility-bar-custom color-{{ section.settings.color_scheme }} gradient
+    {% if section.settings.show_line_separator and section.blocks.size > 0 %} utility-bar--bottom-border
+    {% elsif section.settings.show_line_separator and section.settings.show_social and social_icons %} utility-bar--bottom-border-social-only
+    {% endif %}
+    {% if section.settings.enable_country_selector or section.settings.enable_language_selector %} header-localization{% endif %}"
+  {{ block.shopify_attributes }}
+>
+  <div class="page-width utility-bar__grid hide-mobile
+    {% if announcement_bar and language_country_selector or section.settings.show_social and social_icons %}
+      utility-bar__grid--3-col
+    {% elsif language_country_selector or section.settings.show_social and social_icons %}
+      utility-bar__grid--2-col
+    {% endif %}
+  ">
+
+    {% comment %} Social icons (if enabled) {% endcomment %}
+    {% if section.settings.show_social and social_icons %}
+      {% render 'social-icons' %}
+    {% endif %}
+
+    {% comment %} text_icon blocks (up to 3). Skip if fields are blank. {% endcomment %}
+    {% if text_icon_blocks.size > 0 %}
+      <div class="text-icon-blocks" style="display:flex; gap:1.5rem; align-items:center;">
+        {% for block in text_icon_blocks %}
+          {% assign txt = block.settings.icon_text | strip %}
+          {% assign ico = block.settings.icon_class | strip %}
+          {% assign lnk = block.settings.icon_link | strip %}
+
+          {% unless txt == '' and ico == '' and lnk == '' %}
+            <a href="{{ lnk }}" class="text-icon-link" style="text-decoration:none;">
+              <div class="text-icon-item" style="display:flex; align-items:center; gap:0.5rem;">
+                {% if block.settings.svg_code %}
+                  {{ block.settings.svg_code}}
+                {% endif %}
+                
+                {% if txt != '' %}
+                  <span class="hide-mobile">
+                    {{ txt }}
+                  </span>
+                {% endif %}
+              </div>
+            </a>
+          {% endunless %}
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% comment %}
+      menu_block with "type": "link_list"
+      - The first link is shown permanently.
+      - The rest go to a dropdown.
+      - We have label_text + label_link on the left (with a right border).
+      - The arrow rotates on click.
+    {% endcomment %}
+    {% if menu_blocks.size > 0 %}
+      {% assign menu_block = menu_blocks.first %}
+      {% assign menu_handle = menu_block.settings.menu %}
+      {% assign label_text = menu_block.settings.menu_label_text | strip %}
+      {% assign label_link = menu_block.settings.menu_label_link | strip %}
+
+      {% comment %}
+        Check if user has selected a link_list with at least 1 link
+      {% endcomment %}
+      {% if menu_handle != '' and linklists[menu_handle] and linklists[menu_handle].links.size > 0 %}
+        {% assign all_links = linklists[menu_handle].links %}
+        {% assign first_link = all_links.first %}
+        {% assign other_links = all_links | slice: 1, all_links.size %}
+
+        <div class="menu-block block-for-link-default-hover" style="position:relative; display:flex; align-items:center; padding:0.5rem;">
+          {% unless label_text == '' and label_link == '' %}
+            <div class="menu-block__label-text">
+              {% if label_link != '' %}
+                <a href="{{ label_link }}" class="menu-block__label-link" style="text-decoration:none;">
+                  {{ label_text }}
+                </a>
+              {% else %}
+                <span>{{ label_text }}</span>
+              {% endif %}
+            </div>
+          {% endunless %}
+
+          <div class="wrapper-stable-custom">
+            {% if first_link.title != '' and first_link.url != '' %}
+              <div class="menu-block__stable-link">
+                <a href="{{ first_link.url }}" style="text-decoration:none;">
+                  {{ first_link.title }}
+                </a>
+              </div>
+            {% endif %}
+
+            {% if other_links.size > 0 %}
+              <button type="button"
+                      class="menu-block__toggle"
+                      style="background:none;border:none;cursor:pointer;"
+                      aria-label="Toggle menu">
+                <span class="arrow" style="display:inline-block; transition:transform 0.2s;">
+                <i class="fa-solid fa-chevron-down"></i>
+                </span>
+                
+              </button>
+              <ul class="menu-block__dropdown"
+                  style="position:absolute; left:0; display:none; background:#fff; border:1px solid #ccc; margin:0; padding:0; list-style:none; min-width:150px;">
+                {% for link in other_links %}
+                  {% if link.title != '' and link.url != '' %}
+                    <li style="border-bottom:1px solid #eee;">
+                      <a href="{{ link.url }}"
+                        style="display:block;padding:0.5rem;text-decoration:none;">
+                        {{ link.title }}
+                      </a>
+                    </li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    {% endif %}
+
+    {% comment %}
+      Now announcements (original logic):
+      - If 1 => single
+      - If >1 => slider
+    {% endcomment %}
+    {% assign ann_count = announcement_blocks.size %}
+    {% if ann_count == 1 %}
+      <div
+        class="announcement-bar{% if section.settings.show_social %} announcement-bar--one-announcement{% endif %}"
+        role="region"
+        aria-label="{{ 'sections.header.announcement' | t }}"
+        {{ block.shopify_attributes }}
+      >
+        {% capture single_announcement_html %}
+          {% assign block = announcement_blocks.first %}
+          {% if block.settings.text != '' %}
+            {% if block.settings.link != '' %}
+              <a
+                href="{{ block.settings.link }}"
+                class="announcement-bar__link link link--text focus-inset animate-arrow"
+              >
+            {% endif %}
+            <p class="announcement-bar__message h5">
+              <span>{{ block.settings.text | escape }}</span>
+              {% if block.settings.link != '' %}
+                {{ 'icon-arrow.svg' | inline_asset_content }}
+              {% endif %}
+            </p>
+            {% if block.settings.link != '' %}
+              </a>
+            {% endif %}
+          {% endif %}
+        {% endcapture %}
+        {{ single_announcement_html }}
+      </div>
+    {% elsif ann_count > 1 %}
+      <slideshow-component
+        class="announcement-bar"
+        role="region"
+        aria-roledescription="{{ 'sections.announcements.carousel' | t }}"
+        aria-label="{{ 'sections.announcements.announcement_bar' | t }}"
+      >
+        <div class="announcement-bar-slider slider-buttons">
+          <button
+            type="button"
+            class="slider-button slider-button--prev"
+            name="previous"
+            aria-label="{{ 'sections.announcements.previous_announcement' | t }}"
+            aria-controls="Slider-{{ section.id }}"
+          >
+            <span class="svg-wrapper">
+              {{ 'icon-caret.svg' | inline_asset_content }}
+            </span>
+          </button>
+
+          <div
+            class="grid grid--1-col slider slider--everywhere"
+            id="Slider-{{ section.id }}"
+            aria-live="polite"
+            aria-atomic="true"
+            data-autoplay="{{ section.settings.auto_rotate }}"
+            data-speed="{{ section.settings.change_slides_speed }}"
+          >
+            {% for block in announcement_blocks %}
+              <div
+                class="slideshow__slide slider__slide grid__item grid--1-col"
+                id="Slide-{{ section.id }}-{{ forloop.index }}"
+                {{ block.shopify_attributes }}
+                role="group"
+                aria-roledescription="{{ 'sections.announcements.announcement' | t }}"
+                aria-label="{{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}"
+                tabindex="-1"
+              >
+                <div
+                  class="announcement-bar__announcement"
+                  role="region"
+                  aria-label="{{ 'sections.header.announcement' | t }}"
+                  {{ block.shopify_attributes }}
+                >
+                  {% if block.settings.text != '' %}
+                    {% if block.settings.link != '' %}
+                      <a
+                        href="{{ block.settings.link }}"
+                        class="announcement-bar__link link link--text focus-inset animate-arrow"
+                      >
+                    {% endif %}
+                    <p class="announcement-bar__message h5">
+                      <span>{{ block.settings.text | escape }}</span>
+                      {% if block.settings.link != '' %}
+                        {{ 'icon-arrow.svg' | inline_asset_content }}
+                      {% endif %}
+                    </p>
+                    {% if block.settings.link != '' %}
+                      </a>
+                    {% endif %}
+                  {% endif %}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+
+          <button
+            type="button"
+            class="slider-button slider-button--next"
+            name="next"
+            aria-label="{{ 'sections.announcements.next_announcement' | t }}"
+            aria-controls="Slider-{{ section.id }}"
+          >
+            <span class="svg-wrapper">
+              {{ 'icon-caret.svg' | inline_asset_content }}
+            </span>
+          </button>
+        </div>
+      </slideshow-component>
+      {% if request.design_mode %}
+        <script src="{{ 'theme-editor.js' | asset_url }}" defer="defer"></script>
+        <style>
+          /* theme editor power preview fix */
+          .announcement-bar-slider .slider__slide[aria-hidden='true'] {
+            visibility: hidden;
+          }
+        </style>
+      {% endif %}
+    {% endif %}
+
+    <div class="localization-wrapper">
+      {% if section.settings.enable_country_selector and localization.available_countries.size > 1 %}
+        <localization-form class="small-hide medium-hide">
+          {% form 'localization', id: 'AnnouncementCountryForm', class: 'localization-form' %}
+            <div>
+              <h2 class="visually-hidden" id="AnnouncementCountryLabel">
+                {{ 'localization.country_label' | t }}
+              </h2>
+              {% render 'country-localization', localPosition: 'AnnouncementCountry' %}
+            </div>
+          {% endform %}
+        </localization-form>
+      {% endif %}
+
+      {% if section.settings.enable_language_selector and localization.available_languages.size > 1 %}
+        <localization-form class="small-hide medium-hide">
+          {% form 'localization', id: 'AnnouncementLanguageForm', class: 'localization-form' %}
+            <div>
+              <h2 class="visually-hidden" id="AnnouncementLanguageLabel">
+                {{ 'localization.language_label' | t }}
+              </h2>
+              {% render 'language-localization', localPosition: 'AnnouncementLanguage' %}
+            </div>
+          {% endform %}
+        </localization-form>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% comment %}
+  Simple JS for toggling the dropdown in menu_block:
+  - Show/hide .menu-block__dropdown on button click
+  - Rotate the arrow
+{% endcomment %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var toggles = document.querySelectorAll('.menu-block__toggle');
+
+    // Rotate the arrow
+    var arrowRotate = function(element) {
+      element.classList.toggle('active');
+      var arrow = element.querySelector('.arrow');
+      console.log(element);
+      if (arrow) {
+        arrow.style.transform = element.classList.contains('active')
+          ? 'rotate(180deg)'
+          : 'rotate(0deg)';
+      }
+    }
+    var modalToggler = function(element) {
+      var dropdown = element.parentElement.querySelector('.menu-block__dropdown');
+      if (dropdown) {
+        dropdown.style.display = (dropdown.style.display === 'none' || dropdown.style.display === '')
+          ? 'block'
+          : 'none';
+      }
+    }
+
+    // Function to close the dropdown
+    var closeDropdown = function(element) {
+      var dropdown = element.parentElement.querySelector('.menu-block__dropdown');
+      var toggle = element.parentElement.querySelector('.menu-block__toggle');
+      if (dropdown && (dropdown.style.display === 'block')) {
+        dropdown.style.display = 'none';
+        arrowRotate(toggle);
+      }
+    }
+
+    function handleClickOutside(targetElement, callback) {
+      if (!targetElement) return;
+
+      function onClick(event) {
+        if (!targetElement.contains(event.target)) {
+          callback();
+          removeListener();
+        }
+      }
+
+      // Attach the event listener
+      document.addEventListener('click', onClick);
+
+      // Return a function to remove the listener
+      function removeListener() {
+        document.removeEventListener('click', onClick);
+      }
+
+      return removeListener;
+    }
+
+    toggles.forEach(function(toggle) {
+      toggle.addEventListener('click', function(event) {
+        event.stopPropagation();
+
+        modalToggler(this);
+        arrowRotate(this);
+
+        // Set up the outside click handler only if the dropdown is now open
+        var dropdown = toggle.parentElement.querySelector('.menu-block__dropdown');
+        if (dropdown && dropdown.style.display === 'block') {
+          // Define the callback to close the dropdown
+          var removeOutsideClickListener = handleClickOutside(this.parentElement, function() {
+            closeDropdown(dropdown);
+            // Remove the listener after it's triggered
+            removeOutsideClickListener();
+          });
+        }
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Announcement Bar: Basic",
+  "max_blocks": 12,
+  "class": "announcement-bar-section",
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-4"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_line_separator",
+      "default": true,
+      "label": "Show line separator"
+    },
+    {
+      "type": "header",
+      "content": "Social Icons Settings",
+      "info": "Configure your social icons"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social",
+      "default": false,
+      "label": "Show social icons"
+    },
+    {
+      "type": "header",
+      "content": "Slider Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "auto_rotate",
+      "label": "Auto-rotate announcements",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "change_slides_speed",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Change slides speed",
+      "default": 5
+    },
+    {
+      "type": "header",
+      "content": "Country Selector"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_country_selector",
+      "default": false,
+      "label": "Enable country selector"
+    },
+    {
+      "type": "header",
+      "content": "Language Selector"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_language_selector",
+      "default": false,
+      "label": "Enable language selector"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "announcement",
+      "name": "Announcement",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "default": "Welcome to our store!",
+          "label": "Announcement text"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Announcement link"
+        }
+      ]
+    },
+    {
+      "type": "text_icon",
+      "name": "Text + Icon Block",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon_text",
+          "label": "Text"
+        },
+        {
+          "type": "html",
+          "id": "svg_code",
+          "label": "SVG Code",
+          "default": "<div></div>"
+        },
+        {
+          "type": "url",
+          "id": "icon_link",
+          "label": "Link"
+        }
+      ]
+    },
+    {
+      "type": "menu_block",
+      "name": "Dropdown Menu Block",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Attach a menu (using link_list) + custom text/link"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Choose a link list (menu)"
+        },
+        {
+          "type": "text",
+          "id": "menu_label_text",
+          "label": "Label text (left side)"
+        },
+        {
+          "type": "url",
+          "id": "menu_label_link",
+          "label": "Label link (optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement Bar: Basic",
+      "blocks": [
+        {
+          "type": "announcement"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

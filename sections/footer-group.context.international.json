@@ -1,0 +1,23 @@
+{
+  "parent": "footer-group.json",
+  "context": {
+    "market": "international"
+  },
+  "sections": {
+    "footer": {
+      "settings": {
+        "padding_top": 76,
+        "enable_country_selector": false,
+        "enable_language_selector": false,
+        "margin_top": 0
+      },
+      "blocks": {
+        "link_list_QRMqWA": {
+          "settings": {
+            "heading": "<strong>INFORMACE PRO VÁS<\/strong>"
+          }
+        }
+      }
+    }
+  }
+}

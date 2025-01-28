@@ -1,0 +1,39 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "all_brands_section_UFt67V": {
+      "type": "all-brands-section",
+      "custom_css": [],
+      "settings": {
+        "section_title": "All brands A-Z",
+        "section_subtitle": "",
+        "menu_navigation": "main-menu",
+        "letter_size": 25,
+        "brand_size": 18,
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 30,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20,
+        "background_color": "#ffffff",
+        "title_color": "#000000",
+        "title_size_desktop": 24,
+        "title_size_mobile": 24,
+        "subtitle_color": "#000000",
+        "letter_color": "#000000",
+        "brand_link_color": "#000000",
+        "custom_section_class": "page-width"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "all_brands_section_UFt67V"
+  ]
+}

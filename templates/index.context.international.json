@@ -1,0 +1,28 @@
+{
+  "parent": "index.json",
+  "context": {
+    "market": "international"
+  },
+  "sections": {
+    "rich_text_UAxbKg": {
+      "settings": {
+        "padding_top": 44,
+        "padding_bottom": 20
+      },
+      "blocks": {}
+    },
+    "featured_collection": {
+      "settings": {
+        "padding_bottom": 36
+      },
+      "blocks": {}
+    },
+    "rich_text_z9aiPD": {
+      "settings": {
+        "padding_top": 56,
+        "padding_bottom": 100
+      },
+      "blocks": {}
+    }
+  }
+}

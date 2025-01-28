@@ -1,0 +1,122 @@
+{
+  "sections": {
+    "2_images_custom_banner_EVK8Tw": {
+      "type": "2-images-custom-banner",
+      "settings": {
+        "title": "",
+        "description": "",
+        "padding_top_mobile": 50,
+        "padding_top_desktop": 20,
+        "padding_bottom_mobile": 20,
+        "padding_bottom_desktop": 20,
+        "background_color": "#f4f6fa",
+        "image_1": "shopify:\/\/shop_images\/945x406px-1-en-1.webp",
+        "link_1": "#",
+        "image_2": "shopify:\/\/shop_images\/459x412px-1-en-1.webp",
+        "link_2": "#",
+        "image_spacing": 20,
+        "container_max_width": 1400
+      }
+    },
+    "rich_text_UAxbKg": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_d8FNqk": {
+          "type": "heading",
+          "settings": {
+            "heading": "New",
+            "heading_size": "h2"
+          }
+        }
+      },
+      "block_order": [
+        "heading_d8FNqk"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-0c886014-2561-4430-9a70-53ee8201ccf0",
+        "full_width": true,
+        "padding_top": 48,
+        "padding_bottom": 16
+      }
+    },
+    "featured_collection": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": true,
+        "description_style": "body",
+        "collection": "new-product",
+        "products_to_show": 8,
+        "columns_desktop": 4,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "enable_desktop_slider": false,
+        "color_scheme": "scheme-78e3f6cf-fa08-4756-b63c-2c2617a1f147",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 0,
+        "padding_bottom": 48
+      }
+    },
+    "rich_text_z9aiPD": {
+      "type": "rich-text",
+      "blocks": {
+        "text_aWeFdQ": {
+          "type": "text",
+          "settings": {
+            "text": "<h3><strong>Welcome to HobbyDrone.cz - Your Ultimate Destination for FPV Drones and Drone Accessories<\/strong><\/h3><h5>At HobbyDrone.cz, we specialize in providing a wide range of FPV drones, drone accessories, and drone kits tailored to enthusiasts and professionals alike. Whether you're a beginner looking to start your journey into the world of drones or an experienced pilot seeking to upgrade your gear, our comprehensive selection is designed to meet all your needs.<\/h5><h3><strong>Explore Our Extensive Range of FPV Drones<\/strong><\/h3><h5>Find the largest variety of FPV drones in our store. FPV is a type of drones where pilots get a live footage from the perspective of the drone. <\/h5><h5><\/h5><h5>· Beginner FPV Drones: Drone novices are made for people who would be flying the drone for the first time and in most cases are less complex. <\/h5><h5><\/h5><h5>· Advanced FPV Drones: These are the types of drones which are better for professional use since they are more developed and are easier to control, they can be used for racing or for aerial filming. <\/h5><h5><\/h5><h5>· Customizable FPV Drones: For the do it your-selfers, here are several parameters, which if adjusted allow you to get the drone of your desire.<\/h5><h3><strong>Trusted Brands and High-Quality Products<\/strong><\/h3><h5>We only associate with the best as our main focus is to how we can deliver the best products to our clients. Here are some of the acknowledged brands available for you at HobbyDrone. cz include:<\/h5><h5>- DJI: A leader in the drone industry. It is one of the most reputable brands regarding technology and a highly reliable performer.<\/h5><h5>- TBS (Team BlackSheep): Being in the business of providing a variety of powerful and long-lasting drones, TBS is suitable for users who want highly maneuverable drones.<\/h5><h5>- BETAFPV: Specializing in micro FPV drones with excellent flight stability. <\/h5><h5>- CaddxFPV: A top brand in the FPV camera market, providing high-definition cameras with excellent image quality and low latency.<\/h5><h5>- Walksnail: Is a leading manufacturer of digital video transmission systems for FPV drones.<\/h5><h5>- T-Motor: Main brand in the drone motor industry. Their products are trusted by both recreational and professional drone pilots.<\/h5><h3><strong>Stay Updated with the Latest in FPV Drones<\/strong><\/h3><h5>FPV drone technology is developing rapidly and what is shown in HobbyDrone, we update you on the trends, products and technologies in the market such as Czech Republic. Join our mailing list to be informed on new products in the store, promotional offers and other valuable information that can be provided to the clients by email.<\/h5><p><\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "text_aWeFdQ"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "left",
+        "color_scheme": "scheme-b9955f9a-b504-4aa0-a837-c71992ea4d46",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
+    "1737487190f32124b7": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_featured_carousel_NHf7HM": {
+          "type": "shopify:\/\/apps\/judge-me-reviews\/blocks\/featured_carousel\/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "maxwidth": 1080
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_featured_carousel_NHf7HM"
+      ],
+      "custom_css": [
+        ".jdgm-carousel__right-arrow,.jdgm-carousel__left-arrow {border-width: 3px;}"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    }
+  },
+  "order": [
+    "2_images_custom_banner_EVK8Tw",
+    "rich_text_UAxbKg",
+    "featured_collection",
+    "rich_text_z9aiPD",
+    "1737487190f32124b7"
+  ]
+}
